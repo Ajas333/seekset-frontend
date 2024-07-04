@@ -15,8 +15,9 @@ import Otp from './pages/Common/Otp'
 import 'react-image-crop/dist/ReactCrop.css'
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { googleid } from './validation/ClientId'
-import InterviewRoom from '../../frontend/src/pages/Common/InterviewRoom'
+// import InterviewRoom from '../../frontend/src/pages/Common/InterviewRoom'
 // import InterviewRoom from '../src/pages/Common/InterviewRoom'
+import InterviewRoom from './pages/Common/InterviewRoom'
 
 
 function App() {

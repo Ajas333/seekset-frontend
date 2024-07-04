@@ -21,25 +21,26 @@ export function getUrlParams(url = window.location.href) {
   return new URLSearchParams(urlStr);
 }
 
-export default function App() {
-  const { id } = useParams();
-  // const baseURL = 'http://127.0.0.1:8000';
-  const roomID = getUrlParams().get('roomID') || randomID(5);
+const InterviewRoom =() => {
 
-  useEffect(() => {
-    const makeInterview = async () => {
-      const formData = new FormData();
-      formData.append("roomId", roomID);
-      formData.append("interviewId", id);
-      try {
-        const response = await axios.post(baseURL + '/api/interview/interviewCall/', formData);
-        // console.log(response);
-      } catch (error) {
-        // console.log(error);
-      }
-    };
-    makeInterview();
-  }, [id, roomID, baseURL]);
+    const { id } = useParams();
+    // const baseURL = 'http://127.0.0.1:8000';
+    const roomID = getUrlParams().get('roomID') || randomID(5);
+
+    useEffect(() => {
+      const makeInterview = async () => {
+        const formData = new FormData();
+        formData.append("roomId", roomID);
+        formData.append("interviewId", id);
+        try {
+          const response = await axios.post(baseURL + '/api/interview/interviewCall/', formData);
+          // console.log(response);
+        } catch (error) {
+          // console.log(error);
+        }
+      };
+      makeInterview();
+    }, [id, roomID, baseURL]);
 
   const myMeeting = async (element) => {
     const appID = 837737912;
@@ -72,3 +73,4 @@ export default function App() {
     ></div>
   );
 }
+export default InterviewRoom
