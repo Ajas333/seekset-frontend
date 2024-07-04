@@ -20,19 +20,19 @@ function CandidateSignin({setIsSpinner}) {
     const [formError , setFormError] = useState('')
     const navigate = useNavigate();
     const dispatch =useDispatch();
-    // const baseURL = 'http://127.0.0.1:8000/';
+    
 
     const handleOnSubmit= async(values,{setSubmitting})=>{
-        // console.log("inside handle on submit", values);
+        
         const formData = new FormData();
         formData.append("full_name",values.username);
         formData.append("email",values.email);
         formData.append("password",values.password);
-        // console.log("form data ...",formData)
+       
         setIsSpinner(true)
         try{
             const response = await axios.post(baseURL+'/api/account/cand_register/',formData)
-            // console.log("response...",response)
+           
             if (response.status ==200){
               toast.success('Registered successfull!',{
                 position: "top-center",
