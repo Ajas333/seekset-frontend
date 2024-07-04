@@ -4,8 +4,8 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
 
+const baseURL = import.meta.env.VITE_API_BASEURL
 function randomID(len) {
-  const baseURL = import.meta.env.VITE_API_BASEURL
   let result = '';
   var chars = '12345qwertyuiopasdfgh67890jklmnbvcxzMNBVCZXASDQWERTYHGFUIOLKJP';
   var maxPos = chars.length;
