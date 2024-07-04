@@ -1,0 +1,1 @@
+export const googleid = "588719467693-e6763ad5dltlhmi7bod9kgrcpubhi5ou.apps.googleusercontent.com";
