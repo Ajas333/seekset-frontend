@@ -78,46 +78,46 @@ function CandidateHome() {
           />
       </div>
         
-    {/* main body  */}
-        <div className='pt-7'>
+      {/* main body  */}
+        <div className='pt-7 w-full'>
           {/* search bar */}
-          <div className='pt-7 0 flex justify-center '>
-              <SearchBox  
-                setJobData={setJobData}
-                jobData={jobData}
-                setFilterData = {setFilterData}
-                setAction = {setAction}/>
-          </div>
+            <div className='mt-7  flex justify-center '>
+                <SearchBox  
+                  setJobData={setJobData}
+                  jobData={jobData}
+                  setFilterData = {setFilterData}
+                  setAction = {setAction}/>
+            </div>
 
-          <div className='flex' >
-              {/* job cards */}
-                  <div className='flex flex-col justify-center mt-5 w-4/6'>
-                 
-                 
-                  {currentJobs.map((job) => (
-                    <JobCard
-                      key={job.id}
-                      id={job.id}
-                      img={job.employer.profile_pic}
-                      title={job.title}
-                      posted={job.posteDate}
-                      applybefore={job.applyBefore}
-                      empname={job.employer.user_full_name}
-                      jobtype={job.jobtype}
-                      salary={job.lpa}
-                      experiance={job.experiance}
-                      location={job.location}
-                    />
-                  ))}
+            <div className="flex flex-col min-h-[32rem]">
+                <div className="flex-grow flex 0 justify-center">
+                  <div className="flex flex-col justify-center w-4/6">
+                    {currentJobs.map((job) => (
+                      <JobCard
+                        key={job.id}
+                        id={job.id}
+                        img={job.employer.profile_pic}
+                        title={job.title}
+                        posted={job.posteDate}
+                        applybefore={job.applyBefore}
+                        empname={job.employer.user_full_name}
+                        jobtype={job.jobtype}
+                        salary={job.lpa}
+                        experiance={job.experiance}
+                        location={job.location}
+                      />
+                    ))}
                   </div>
-
-                  <NewsCard/>
-        </div>
-        <Pagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChange={handlePageChange}
-        />
+                </div>
+                <div className="">
+                  <Pagination
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    onPageChange={handlePageChange}
+                  />
+                </div>
+              </div>
+           
         </div>
     </div>
   )

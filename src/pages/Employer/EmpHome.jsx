@@ -26,7 +26,7 @@ function EmpHome() {
       // console.log(responce)
       if(responce.status == 200){
         setJobData(responce.data.data)
-        // console.log("job data",jobData)
+        console.log("job data",jobData)
       }
       else{
 
