@@ -193,9 +193,7 @@ function EmpLogin() {
                             />
                         </div> */}
                         
-                        <p className="text-sm leading-relaxed text-grey-900">
-                          Not registered yet? <Link to={'/employer/signup/'}><span className="font-bold text-grey-700 cursor-pointer">Create an Account</span></Link>
-                        </p>
+                        
                       </Form>
                     )}
                   </Formik>

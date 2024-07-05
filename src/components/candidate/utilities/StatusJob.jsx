@@ -1,12 +1,11 @@
 import React, { useState,useEffect } from 'react'
 import { RiMessage2Fill } from "react-icons/ri";
 import ChatModal from './ChatModal';
-// import { baseURL } from '../../Urls';
 
-function StatusJob({selectedJob}) {
+
+function StatusJob({selectedJob,toggleDrawer}) {
     const [step,setStep]=useState(0)
     const [chat,setChat]=useState(false)
-    // const baseURL='http://127.0.0.1:8000'
     const baseURL = import.meta.env.VITE_API_BASEURL
 
     useEffect(() => {
@@ -31,16 +30,14 @@ function StatusJob({selectedJob}) {
     
     
       if (!selectedJob) {
-        return null; // or a loading spinner or message
+        return null; 
       }
       
       const handleChat = ()=>{
         setChat(true)
     }
       
-    // console.log("inside status job component",selectedJob)
-    // console.log("step.................",step)
-    // console.log(selectedJob.job.employer.profile_pic)
+   
     
     const profile_pic = baseURL+selectedJob.job.employer.profile_pic
     const userName = selectedJob.job.employer.user_full_name
@@ -54,8 +51,9 @@ function StatusJob({selectedJob}) {
       <div className=' bg-white mb-2 p-3 rounded-md px  relative'>
         {chat && <ChatModal candidate_name={candidate_name} profile_pic={profile_pic} userName={userName} setChat={setChat} candidate_id={candidate_id} employer_id={employer_id}/>}
         <div className='absolute top-0 right-0 p-2 text-gray-500'>
-        <RiMessage2Fill  size={25} className='cursor-pointer' onClick={handleChat}/>
+            <RiMessage2Fill  size={25} className='cursor-pointer' onClick={handleChat}/>
         </div>
+       
                     <div className=''>
                         <p className='text-xl font-bold text-gray-800'>{selectedJob.job.title}</p>
                         <span>{selectedJob.job.employer.user_full_name}</span>
@@ -65,8 +63,8 @@ function StatusJob({selectedJob}) {
                     </div>
                     <span className='text-lg font-bold'>Application Status</span>
                     
-                    <div className="flex items-center justify-between mt-3">
-                        <div className={`flex flex-col items-center `}>
+                    <div className="flex items-center justify-between mt-3 ">
+                        <div className={`flex flex-col items-center  `}>
                             <div className={`w-6 h-6 rounded-full flex items-center justify-center ${step >= 1 ? 'bg-green-500' : 'bg-gray-500'}`}>
                                 <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
@@ -91,7 +89,7 @@ function StatusJob({selectedJob}) {
                             <p className="mt-2 text-center">Resume Viewed</p>                
                         </div> 
                         <div className={`flex flex-col items-center `}>
-                            <div className={`w-6 h-6 rounded-full flex items-center justify-center ${step == 4 ? 'bg-green-500': step == 6 ? 'bg-red-500': 'bg-gray-500'}`}>
+                            <div className={`w-6 h-6 rounded-full flex items-center justify-center ${step == 4 ? 'bg-green-500': step == 6 ? 'bg-red-500': 'bg-blue-500'}`}>
                                 <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                                 </svg>

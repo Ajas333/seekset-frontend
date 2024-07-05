@@ -203,7 +203,7 @@ function Profile() {
        {showModal && <Modal action={action} setAction={setAction} setShowModal={setShowModal} section={section} modalData={modalData} userId={profileData.user} />}
        {modal && <ProfilepicModal setCroppedImageUrl={setCroppedImageUrl} setImageUrl={setImageUrl} setImgError={setImgError} imageUrl={imageUrl} closeModal={() => setModal(false)} onCropSubmit={handleCropSubmit} />}
        </div>
-        <div className="w-4/6 py-7">
+        <div className="w-full md:w-4/6 py-7">
           {/* personal info */}
           <div className=" bg-gray-50 gap-1 py-1 px-2 rounded-md relative">
             <div>
@@ -214,8 +214,8 @@ function Profile() {
                   Personal Info
                 </div>
             </div>
-            <div className="flex">
-              <div className="py-5 pl-5 ">
+            <div className="flex flex-col md:flex-row "> 
+              <div className=" pt-3 md:py-5 pl-5 flex flex-col items-center bg-blue-100 md:bg-gray-50">
                 <div className="relative rounded-full border-4 border-green-500 border-opacity-60">
                 <div onClick={handleIconClick} className="absolute bottom-0 right-0 bg-gray-800 rounded-full p-1 cursor-pointer">
                   <GoPencil className="w-4 h-4 text-white" />
@@ -226,58 +226,52 @@ function Profile() {
                   alt="Avatar"
                 />
                 </div>
-              </div>
-                <input type="file" ref={fileInputRef} style={{ display: 'none' }}
+                <div className="mb-4">
+                    <span className="text-gray-600 font-bold text-2xl">
+                      {profileData.user_name}
+                    </span>
+                  </div>
+                  <input type="file" ref={fileInputRef} style={{ display: 'none' }}
                   accept=".jpg,.jpeg,.png"
                   onChange={handleImageChange}
                 />
-                <div className=" w-full px-3 py-2">
-                <div className="mb-4">
-                  <span className="text-gray-600 font-bold text-2xl">
-                    {profileData.user_name}
-                  </span>
-                </div>
+              </div>
+               
+                <div className=" w-full px-3 py-2 pl-6 md:pt-14">
+                  <div className="grid grid-cols-1 md:grid-cols-3 ">
+                      
+                      <div className="flex items-center mb-3 md:mb-5 gap-1">
+                          <IoLocationOutline className="w-5 h-5 text-gray-500" />
+                          <span className="text-gray-600 font-semibold">{profileData.place}</span>
+                        </div>
 
-                <div className=" flex flex-row">
-                  <div className=" basis-2/6">
-                    <div className=" ">
-                      <div className="flex items-center mb-5 gap-1">
-                        <IoLocationOutline className="w-5 h-5 text-gray-500" />
-                        <span className="text-gray-600 font-semibold">{profileData.place}</span>
-                      </div>
-                      <div className="flex items-center gap-1">
-                        <RxAvatar className="w-4 h-4 text-gray-500" />
-                        <span className="text-gray-600 font-semibold">{profileData.Gender}</span>
-                      </div>
-                    </div>
+                        <div className="flex items-center mb-3 md:mb-5 gap-1">
+                          <MdOutlineMail className="w-4 h-4 text-gray-500" />
+                          <span className="text-gray-600 font-semibold">
+                            {profileData.email}
+                          </span>
+                        </div>
+                        
+                        <div className="flex items-center  mb-3 md:mb-5 gap-1">
+                          <FaPhone className="w-5 h-5 text-gray-500" />
+                          <span className="text-gray-600 font-semibold">
+                            {profileData.phone}
+                          </span>
+                        </div>
+
+                        <div className="flex items-center  mb-3 md:mb-5 gap-1">
+                          <RxAvatar className="w-4 h-4 text-gray-500" />
+                          <span className="text-gray-600 font-semibold">{profileData.Gender}</span>
+                        </div>
+
+                        <div className="flex items-center gap-1">
+                          <MdDateRange className="w-4 h-4 text-gray-500" />
+                          <span className="text-gray-600 font-semibold">
+                            {profileData.dob}
+                          </span>
+                        </div>
+
                   </div>
-                  <div className="basis-2/6">
-                    <div className=" ">
-                      <div className="flex items-center mb-5 gap-1">
-                        <MdOutlineMail className="w-4 h-4 text-gray-500" />
-                        <span className="text-gray-600 font-semibold">
-                          {profileData.email}
-                        </span>
-                      </div>
-                      <div className="flex items-center gap-1">
-                        <MdDateRange className="w-4 h-4 text-gray-500" />
-                        <span className="text-gray-600 font-semibold">
-                          {profileData.dob}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                  <div>
-                    <div className=" basis-2/6">
-                      <div className="flex items-center mb-5 gap-1">
-                        <FaPhone className="w-5 h-5 text-gray-500" />
-                        <span className="text-gray-600 font-semibold">
-                          {profileData.phone}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
                 </div>
             </div>
           </div>
@@ -294,32 +288,36 @@ function Profile() {
                     Educational Info
                   </div>
               </div>
-              {eduData.map((edu,index)=>(
-                <div className="" key={index}>
-                  
-                    <div className="flex flex-row gap-3">
-                      <div className=" basis-1/6">
-                        <p className="text-center font-semibold text-gray-700 ">{edu.education} </p>
-                      </div>
-                      <div className=" basis-2/6">
-                        <p className="text-center font-semibold text-gray-700 " >{edu.specilization}</p>
-                      </div>
-                      <div className=" basis-2/6">
-                        <p className="text-center font-semibold text-gray-700 " >{edu.college}</p>
-                      </div>
-                      <div className=" basis-1/6">
-                          <p className="text-center font-semibold text-gray-700 " >{edu.completed}</p>
-                      </div>
-                      <div className=" basis-1/6">
-                          <p className="text-center font-semibold text-gray-700 " >{edu.mark}</p>
-                      </div>
-                      <div className=" basis-1/6 justify-center flex">
-                          <p className=" font-semibold text-gray-700 cursor-pointer" onClick={()=>handleDelete(edu)} ><MdDelete/></p>
-                      </div>
-                    </div>
-                    
-                </div>  
-              ))}
+              <div className="overflow-x-auto">
+      <table className="min-w-full bg-white shadow-md ">
+        <thead>
+          <tr>
+            <th className="px-4 py-2 text-center">Education</th>
+            <th className="px-4 py-2 text-center">Specialization</th>
+            <th className="px-4 py-2 text-center">College</th>
+            <th className="px-4 py-2 text-center">Completed</th>
+            <th className="px-4 py-2 text-center">Mark</th>
+            <th className="px-4 py-2 text-center">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {eduData.map((edu, index) => (
+            <tr key={index}>
+              <td className="border px-4 py-2 text-center">{edu.education}</td>
+              <td className="border px-4 py-2 text-center">{edu.specilization}</td>
+              <td className="border px-4 py-2 text-center">{edu.college}</td>
+              <td className="border px-4 py-2 text-center">{edu.completed}</td>
+              <td className="border px-4 py-2 text-center">{edu.mark}</td>
+              <td className="border px-4 py-2 text-center">
+                <button className="text-red-600" onClick={() => handleDelete(edu)}>
+                  <MdDelete />
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
           </div>
 
           {/* Skills */}

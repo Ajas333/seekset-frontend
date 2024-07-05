@@ -5,6 +5,8 @@ import JobCard from '../../components/candidate/utilities/JobCard';
 import NewsCard from '../../components/candidate/utilities/NewsCard';
 import SearchBox from '../../components/candidate/utilities/SearchBox';
 import Pagination from '../../components/candidate/utilities/Pagination';
+import Drawer from 'react-modern-drawer'
+import 'react-modern-drawer/dist/index.css'
 
 
 function CandidateHome() {
@@ -20,6 +22,12 @@ function CandidateHome() {
     const [action,setAction]=useState(false)
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 5;
+    const [isOpen, setIsOpen] =useState(false)
+   
+
+    const toggleDrawer = () => {
+      setIsOpen(!isOpen)
+  }
 
     // console.log(token)
     useEffect(() => {
@@ -59,29 +67,34 @@ function CandidateHome() {
   // console.log("ufvuyfuyfuyfuyf",jobData)
   // console.log("filtered data.........",filterData)
   return (
-    <div className='flex'> 
+    <div className='flex relative'> 
       {/* filter side bar */}
-      <div className='w-64'>
-        <Filter 
-          dateRange={dateRange}
-          setDateRange={setDateRange}
-          salaryRange={salaryRange}
-          setSalaryRange={setSalaryRange}
-          jobType={jobType}
-          setJobType={setJobType}
-          experienceType={experienceType}
-          setExperienceType={setExperienceType}
-          setJobData={setJobData}
-          jobData={jobData}
-          setFilterData = {setFilterData}
-          setAction = {setAction}
+      <div className='absolute md:hidden mt-14 '>
+        <button onClick={toggleDrawer} className="w-16 h-8 mt-2 text-white font-semibold bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-lg shadow-lg hover:scale-105 duration-200 hover:drop-shadow-2xl hover:shadow-[#7dd3fc] hover:cursor-pointer">
+          Filter
+        </button>
+        <Drawer
+            open={isOpen}
+            onClose={toggleDrawer}
+            direction='left'
+            className='bla bla bla'>
+            <div className='bg-gray-50'>
+            <Filter dateRange={dateRange} setDateRange={setDateRange} salaryRange={salaryRange} setSalaryRange={setSalaryRange} jobType={jobType}  setJobType={setJobType} experienceType={experienceType}
+              setExperienceType={setExperienceType} setJobData={setJobData}jobData={jobData} setFilterData = {setFilterData} setAction = {setAction}
+          />
+            </div>
+        </Drawer>
+        </div>
+      <div className='hidden md:block w-64'>
+        <Filter dateRange={dateRange} setDateRange={setDateRange} salaryRange={salaryRange} setSalaryRange={setSalaryRange} jobType={jobType}  setJobType={setJobType} experienceType={experienceType}
+          setExperienceType={setExperienceType} setJobData={setJobData}jobData={jobData} setFilterData = {setFilterData} setAction = {setAction}
           />
       </div>
         
       {/* main body  */}
         <div className='pt-7 w-full'>
           {/* search bar */}
-            <div className='mt-7  flex justify-center '>
+            <div className='mt-7 ml-10 flex justify-center '>
                 <SearchBox  
                   setJobData={setJobData}
                   jobData={jobData}
@@ -89,24 +102,14 @@ function CandidateHome() {
                   setAction = {setAction}/>
             </div>
 
-            <div className="flex flex-col min-h-[32rem]">
-                <div className="flex-grow flex 0 justify-center">
-                  <div className="flex flex-col justify-center w-4/6">
+            <div className="flex flex-col min-h-[32rem] ">
+                <div className="flex-grow flex 0 justify-center ">
+                  <div className="flex flex-col justify-center md:w-4/6 ">
                     {currentJobs.map((job) => (
-                      <JobCard
-                        key={job.id}
-                        id={job.id}
-                        img={job.employer.profile_pic}
-                        title={job.title}
-                        posted={job.posteDate}
-                        applybefore={job.applyBefore}
-                        empname={job.employer.user_full_name}
-                        jobtype={job.jobtype}
-                        salary={job.lpa}
-                        experiance={job.experiance}
-                        location={job.location}
-                      />
+                      <JobCard  key={job.id} id={job.id} img={job.employer.profile_pic} title={job.title} posted={job.posteDate} applybefore={job.applyBefore} 
+                        empname={job.employer.user_full_name} jobtype={job.jobtype} salary={job.lpa} experiance={job.experiance} location={job.location}/>
                     ))}
+
                   </div>
                 </div>
                 <div className="">

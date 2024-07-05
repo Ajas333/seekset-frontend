@@ -46,7 +46,7 @@ function ProfilepicModal({setCroppedImageUrl,setImgError, setImageUrl, imageUrl,
                 <IoCloseCircleOutline />
               </button>
               {imageUrl &&
-                <div className='flex flex-col items-center'>
+                <div className='flex flex-col items-center mt-5'>
                     <ReactCrop
                         crop={crop}
                         onChange={(pixelCrop, percentCrop,)=>setCrop(percentCrop)}

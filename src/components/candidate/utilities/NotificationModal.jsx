@@ -1,9 +1,7 @@
 import React, { useRef, useState,useEffect } from 'react'
 import axios from 'axios';
-// import { baseURL } from '../../Urls';
 
 function NotificationModal({notifications,setModal,userid,setUnreadCount}) {
-  // const baseURL='http://127.0.0.1:8000'
   const baseURL = import.meta.env.VITE_API_BASEURL
   const token = localStorage.getItem('access')
     const  modalRef = useRef();
@@ -24,13 +22,11 @@ function NotificationModal({notifications,setModal,userid,setUnreadCount}) {
               'Content-Type': 'multipart/form-data'
           }
           })
-          // console.log("notification responce.......",response)
           if(response.status==200){
             setUnreadCount(0)
           }
         }
         catch(error){
-          // console.log(error)
         }
       }
       changeStatus();

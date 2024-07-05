@@ -1,9 +1,12 @@
 import React,{useState,useEffect} from 'react'
 import axios from 'axios'
-import { IoSend } from "react-icons/io5";
 import { w3cwebsocket as W3CWebSocket } from "websocket";
 // import Message from '../../../components/employer/utilities/Message';
 import Messages from '../../../components/candidate/utilities/Messages';
+import Drawer from 'react-modern-drawer';
+import 'react-modern-drawer/dist/index.css';
+import Chats from '../../../components/candidate/utilities/Chats';
+
 
 
 function Message() {
@@ -16,6 +19,11 @@ function Message() {
     const [client,setClient] =useState(null)
     const [selectedChat,setSelectedChat] = useState([])
     const [candidateName,setCandidateName] = useState(null)
+
+    const [isOpen, setIsOpen] = useState(false);
+    const [chatDrawer, setChatDrawer] = useState(false);
+
+  
 
     useEffect(()=>{
       const fetchMessageData = async()=>{
@@ -75,6 +83,7 @@ function Message() {
         // console.log("roooooooooooooooooooom",room)
         connectToWebSocket(room.candidate,room.employer,room.candidate);
         setSelectedChat(room)
+        setChatDrawer(true);
         // console.log("helloooooo")
       }
 
@@ -94,7 +103,7 @@ function Message() {
   return (
     <div className=' w-full h-screen pt-12'>
     <div className="grid min-h-full w-full lg:grid-cols-[280px_1fr] ">
-      <div className="hidden border-r bg-gray-100/40 lg:block ">
+      <div className=" border-r bg-gray-100/40 ">
         <div className="flex h-full max-h-screen flex-col gap-2">
         
           <nav className="flex flex-col gap-1 overflow-auto py-2">
@@ -111,7 +120,7 @@ function Message() {
           </nav>
         </div>
       </div>
-    <div className="flex flex-col">
+    {/* <div className="flex flex-col">
       <header className="flex h-14 lg:h-[60px] items-center gap-4 border-b bg-gray-100/40 px-6 dark:bg-gray-800/40">
       
         <div className="flex-1">
@@ -163,6 +172,22 @@ function Message() {
           </button>
         </div>
       </div>
+    </div> */}
+    <div className='hidden md:block'>
+        
+       <Chats candidateName={candidateName} selectedChat={selectedChat} chatMessages={chatMessages} setMessage={setMessage} message={message} sendMessage={sendMessage} />
+    </div>
+    <div className='block md:hidden'>
+    <Drawer
+          open={chatDrawer}
+          onClose={() => setChatDrawer(false)}
+          direction='right'
+          size={440}
+          className='bla bla bla'>
+          <div className='bg-gray-100 '>
+            <Chats setChatDrawer={setChatDrawer} chatDrawer={chatDrawer} candidateName={candidateName} selectedChat={selectedChat} chatMessages={chatMessages} setMessage={setMessage} message={message} sendMessage={sendMessage} />
+          </div>
+        </Drawer>
     </div>
   </div>
 

@@ -196,6 +196,7 @@ function ProfileCreation() {
         <img src={logo} alt="" className='w-12 h-10' />
       </div>
       <div className='flex w-full bg-blue-50'>
+
         <div className='hidden md:inline md:w-2/5 '>
           <div className='mt-16 mx-4  md:w-full'>
             <h3 className='font-sans text-3xl font-bold drop-shadow-md text-blue-800'>Complete Your Profile</h3>
@@ -210,11 +211,12 @@ function ProfileCreation() {
             </ul>
           </div>
         </div>
-        <div className='w-full  md:w-3/5 flex justify-end  '>
+
+        <div className='w-full  md:w-3/5 flex justify-end '>
           <div className='bg-white w-full md:rounded-l-lg shadow-2xl py-12'>
             <div className=' '>
               {/* numbers */}
-              <div className='flex mt-16 md:mt-8 h-12 w-full justify-center'>
+              <div className='flex mt-8 mt-8 h-12 w-full justify-center'>
                 <div>
                   <div className={`flex justify-center rounded-full ${step > 1 ? 'border-4' : 'border-2'} ${step > 1 ? 'border-green-500' : 'border-gray-900'} border-solid w-12 h-12`}>
                     {step > 1 ? (<FcCheckmark className='mt-2 h-6 w-8' />) : (<span className='mt-2'>1</span>)}
@@ -237,7 +239,7 @@ function ProfileCreation() {
                   </div>
                 </div>
               </div>
-              <div>
+              <div className=''>
                 {step === 1 && (<p className='text-2xl font-medium mx-3 mt-3 text-blue-800'>About me</p>)}
                 {step === 2 && (<p className='text-2xl font-medium mx-3 mt-3 text-blue-800'>Highest Education</p>)}
                 {step === 3 && (<p className='text-2xl font-medium mx-3 mt-3 text-blue-800'>Skills</p>)}
@@ -252,34 +254,30 @@ function ProfileCreation() {
                       <Form >
                           {/* about me content */}
                           {step === 1 && (
-                            <div className='aboutme mx-20 w-4/5 '>
-                                {/* Username and mobile number */}
-                                <div className='flex  gap-2'>
-                                  <div className='flex flex-col w-1/2 '>
+                            <div className='aboutme  md:mx-20  md:4/5 px-8 md:px-0  '>
+                              <div className='grid grid-cols-1 md:grid-cols-2 gap-2'>
+                              <div className='flex flex-col '>
                                     <label htmlFor="username" className='text-gray-500 font-semibold ml-2'>Username</label>
                                     <input type="text" name='username' placeholder='Username' value={authentication_user.name}
                                       className="w-full mb-5  px-4 py-3  text-sm font-medium outline-none focus:bg-grey-400 placeholder:text-grey-700 bg-grey-500 text-dark-grey-900 rounded-2xl"
                                       readOnly
                                     />
                                   </div>
-                                  <div className='flex flex-col w-1/2 '>
+                                  <div className='flex flex-col '>
                                     <label htmlFor="phone" className='text-gray-500 font-semibold ml-3'>Mobile Number</label>
                                       <Field type="text" placeholder='Type here' name="phone" 
                                         className={`flex ${errors.phone && touched.phone? 'border-red-500':''} items-center w-full mb-5 px-4 py-3 mr-2 text-sm font-medium outline-none focus:bg-grey-400 placeholder:text-grey-700 bg-grey-500 text-dark-grey-900 rounded-2xl`}
                                       />
                                       <ErrorMessage name='phone' component='div' className='text-red-500 text-sm mb-2' />
                                   </div>
-                                </div>
-                                {/* Email and Place */}
-                                <div className='flex gap-2'>
-                                  <div className='flex flex-col w-1/2'>
+                                  <div className='flex flex-col '>
                                     <label htmlFor="email" className='text-gray-500 font-semibold ml-3'>Email</label>
                                       <input type="text" placeholder='Email' value={authentication_user.email}
                                         className="flex items-center w-full mb-5  px-4 py-3 text-sm font-medium outline-none focus:bg-grey-400 placeholder:text-grey-700 bg-grey-500 text-dark-grey-900 rounded-2xl"
                                         readOnly
                                       />
                                   </div>
-                                  <div className='flex flex-col w-1/2'>
+                                  <div className='flex flex-col '>
                                       <label htmlFor="place" className='text-gray-500 font-semibold ml-3'>Place</label>
                                       <Field type="text" placeholder='Type here' name="place" 
                                         className={`flex ${errors.place && touched.place ? 'border-red-500':''} items-center w-full mb-5 px-4 py-3 mr-2 text-sm font-medium outline-none focus:bg-grey-400 placeholder:text-grey-700 bg-grey-500 text-dark-grey-900 rounded-2xl`}
@@ -287,10 +285,7 @@ function ProfileCreation() {
                                       <ErrorMessage name='place' component='div' className='text-red-500 text-sm mb-2' />
 
                                   </div>
-                                </div>
-                                {/* date of birth and gender */}
-                                <div className='flex  gap-2'>
-                                  <div className='flex flex-col w-1/2'>
+                                  <div className='flex flex-col '>
                                     <label htmlFor="dob"  className='text-gray-500 font-semibold ml-3'>Date of Birth</label>
                                     <Field type="date" placeholder='Date Of Birth' name="dob" 
                                       className={`w-full  ${errors.dob && touched.dob? 'border-red-500':''} mb-5 px-4 py-3 mr-2 text-sm font-medium outline-none focus:bg-grey-400 placeholder:text-grey-700 bg-grey-500 text-dark-grey-900 rounded-2xl`}
@@ -298,7 +293,7 @@ function ProfileCreation() {
                                   <ErrorMessage name='dob' component='div' className='text-red-500 text-sm mb-2' />
 
                                   </div>
-                                  <div className='flex flex-col w-1/2'>
+                                  <div className='flex flex-col '>
                                   <label htmlFor="gender"  className='text-gray-500 font-semibold ml-3'>Gender</label>
                                     <Field as="select" name="gender" 
                                       className={`flex  ${errors.gender && touched.gender? 'border-red-500':''} items-center w-full mb-5 px-4 py-3  text-sm font-medium outline-none focus:bg-grey-400 placeholder:text-grey-700 bg-grey-500 text-dark-grey-900 rounded-2xl`}
@@ -311,7 +306,10 @@ function ProfileCreation() {
                                   <ErrorMessage name='gender' component='div' className='text-red-500 text-sm mb-2' />
 
                                   </div>
-                                </div>
+                              </div>
+                              
+                              
+                              
                                 {/* profile image */}
                                 <div className='flex'>
                                   <div className='flex flex-col'>
@@ -340,10 +338,9 @@ function ProfileCreation() {
 
                           {/* Education details */}
                           {step === 2 && (
-                            <div className='education mx-20 w-4/5 '>
-                              {/* education and spesialization */}
-                              <div className='flex  gap-2'>
-                                <div className="flex flex-col w-1/2">
+                            <div className='education  md:mx-20 md:w-4/5 px-8 md:px-0 '>
+                              <div className='grid grid-cols-1 md:grid-cols-2 gap-3'>
+                              <div className="flex flex-col ">
                                   <label htmlFor="education" className='text-gray-500 font-semibold ml-2'>Education</label>
                                     <Field as="select" name="education"
                                       className={`flex  ${errors.phone && touched.phone? 'border-red-500':''} items-center w-full mb-5 px-4 py-3  text-sm font-medium outline-none focus:bg-grey-400 placeholder:text-grey-700 bg-grey-500 text-dark-grey-900 rounded-2xl`}
@@ -359,7 +356,7 @@ function ProfileCreation() {
                                   <ErrorMessage name='education' component='div' className='text-red-500 text-sm mb-2' />
 
                                 </div>
-                                <div className="flex flex-col w-1/2">
+                                <div className="flex flex-col ">
                                   <label htmlFor="specilization" className='text-gray-500 font-semibold ml-2'>Specialization</label>
                                   <Field type="text" placeholder='Type here' name="specilization" 
                                     className={`flex ${errors.phone && touched.phone? 'border-red-500':''} items-center w-full mb-5 px-4 py-3  text-sm font-medium outline-none focus:bg-grey-400 placeholder:text-grey-700 bg-grey-500 text-dark-grey-900 rounded-2xl`}
@@ -367,6 +364,7 @@ function ProfileCreation() {
                                   <ErrorMessage name='specilization' component='div' className='text-red-500 text-sm mb-2' />
                                 </div>
                               </div>
+                             
                               {/* collage name */}
                               <div className='flex flex-col'>
                                 <label htmlFor="college" className='text-gray-500 font-semibold ml-2'>College Name</label>
@@ -377,8 +375,8 @@ function ProfileCreation() {
 
                               </div>
                               {/* completeion date and mark */}
-                              <div className='flex gap-2'>
-                                <div className='flex flex-col w-1/2'>
+                              <div className='grid grid-cols-1 md:grid-cols-2 gap-3'>
+                                <div className='flex flex-col '>
                                 <label htmlFor="completed" className='text-gray-500 font-semibold ml-2'>Date of Completion</label>
                                   <Field type="date" placeholder='Completed On' name="completed" 
                                     className={`flex ${errors.completed && touched.completed? 'border-red-500':''} items-center w-full mb-5 px-4 py-3  text-sm font-medium outline-none focus:bg-grey-400 placeholder:text-grey-700 bg-grey-500 text-dark-grey-900 rounded-2xl`}
@@ -386,7 +384,7 @@ function ProfileCreation() {
                                   <ErrorMessage name='completed' component='div' className='text-red-500 text-sm mb-2' />
 
                                 </div>
-                                <div className='flex flex-col w-1/2'>
+                                <div className='flex flex-col '>
                                 <label htmlFor="mark" className='text-gray-500 font-semibold ml-2'>Mark in CGPA</label>
                                   <Field type="text" placeholder='Type here' name="mark" 
                                     className={`flex ${errors.mark && touched.mark? 'border-red-500':''} items-center w-full mb-5 px-4 py-3  text-sm font-medium outline-none focus:bg-grey-400 placeholder:text-grey-700 bg-grey-500 text-dark-grey-900 rounded-2xl`}
@@ -400,7 +398,7 @@ function ProfileCreation() {
                           {step === 3 && (
                             <>
                             {/* other details */}
-                              <div className='skills mx-20 w-4/5 '>
+                              <div className='skills md:mx-20 px-8 md:px-0 md:w-4/5  '>
                                 {/* skills */}
                                 <div className='flex'>
                                   <div className='flex flex-col w-full'>

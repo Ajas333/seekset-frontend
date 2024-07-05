@@ -1,12 +1,10 @@
 import React, { useRef, useState,useEffect } from 'react'
 import { w3cwebsocket as W3CWebSocket } from "websocket";
 import { IoSend } from "react-icons/io5";
-// import { baseURL } from '../../Urls';
 
 function ChatModal({candidate_name,profile_pic,userName,setChat,candidate_id,employer_id}) {
       const baseURL = import.meta.env.VITE_API_BASEURL
       const  modalRef = useRef(); 
-      // const baseURL='http://127.0.0.1:8000/'
       const [chatMessages, setChatMessages] = useState([]);
       const [client, setClient] = useState(null); 
       const [message, setMessage] = useState("");
@@ -21,7 +19,6 @@ function ChatModal({candidate_name,profile_pic,userName,setChat,candidate_id,emp
         }
 
         useEffect(()=>{
-            // console.log("hellllllllllllllloooooooooooooooooooooooooooooo")
             const connectToWebSocket =(candidate_id,employer_id) =>{
               if(!candidate_id || !employer_id) return ;
               
@@ -30,15 +27,12 @@ function ChatModal({candidate_name,profile_pic,userName,setChat,candidate_id,emp
               );
               setClient(newClint);
               newClint.onopen = () => {
-                  // console.log("WebSocket Client Connected");
       
                 };
                 newClint.onmessage = (message) => {
-                  // console.log("ayyooooooooooooooooooooooooooooooooooooooooooooooooooooo")
                   const data = JSON.parse(message.data);
                   setChatMessages((prevMessages) => [...prevMessages, data]);
               };
-              // console.log("set chat messages from websocket",chatMessages)          
                 return () => {
                     newClint.close();
                     };                
@@ -49,14 +43,11 @@ function ChatModal({candidate_name,profile_pic,userName,setChat,candidate_id,emp
 
         const sendMessage = ()=>{
             if (!client || client.readyState !== client.OPEN) {
-                // console.error("WebSocket is not open");
                 return;
               }
               const sendername = candidate_name
-              // console.log("SENDER NAME:", sendername);
               const messageData = { message, sendername };
               const messageString = JSON.stringify(messageData);
-              // console.log("Sending Message:", messageString);
               client.send(messageString);
               setMessage("");
         }

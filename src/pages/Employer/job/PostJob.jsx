@@ -1,8 +1,10 @@
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
 import SideBar from '../../../components/employer/SideBar'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
 import Qmodal from '../../../components/employer/utilities/Qmodal'
+import Drawer from 'react-modern-drawer'
+import 'react-modern-drawer/dist/index.css'
 import Swal from 'sweetalert2'
 import { Formik,Form,Field,ErrorMessage } from 'formik'
 import { PostJobValidationSchema,initialValue } from '../../../validation/PostJobValidation'
@@ -10,6 +12,8 @@ import { PostJobValidationSchema,initialValue } from '../../../validation/PostJo
 
 function PostJob() {
   // const baseURL='http://127.0.0.1:8000/'
+  const [isOpen, setIsOpen] =useState(false)
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
   const baseURL = import.meta.env.VITE_API_BASEURL
   const token = localStorage.getItem('access')
   const [data,setData]=useState({
@@ -34,6 +38,22 @@ function PostJob() {
     buttonsStyling: false
   });
 
+  const toggleDrawer = () => {
+    setIsOpen(!isOpen)
+}
+
+const handleResize = () => {
+  setIsSmallScreen(window.innerWidth < 640);
+};
+
+useEffect(() => {
+  window.addEventListener('resize', handleResize);
+  handleResize(); // Check initial screen size
+
+  return () => {
+      window.removeEventListener('resize', handleResize);
+  };
+}, []);
   const handleChange=(e)=>{
     setData({...data,[e.target.name]:e.target.value})
   }
@@ -135,14 +155,38 @@ function PostJob() {
   return (
     <div className='pt-14 flex'>
       <div>
-          <SideBar/>
-      </div>
+            {isSmallScreen ? (
+                <>
+                    <button onClick={toggleDrawer} title="Add New" className="group cursor-pointer outline-none hover:rotate-90 duration-300">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="40px" height="40px" viewBox="0 0 24 24"
+                        className="stroke-indigo-300 fill-none group-hover:fill-indigo-400 group-active:stroke-indigo-200 group-active:fill-indigo-300 group-active:duration-0 duration-300"
+                      >
+                    <path
+                      d="M12 22C17.5 22 22 17.5 22 12C22 6.5 17.5 2 12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22Z"
+                      strokeWidth="1.5"
+                    ></path>
+                      <path d="M8 12H16" strokeWidth="1.5"></path>
+                      <path d="M12 16V8" strokeWidth="1.5"></path>
+                    </svg>
+                  </button>
+
+                    <Drawer
+                        open={isOpen}
+                        onClose={toggleDrawer}
+                        direction='left'
+                        className='bla bla bla'
+                    >
+                        <div className='bg-gray-50'><SideBar /></div>
+                    </Drawer>
+                </>
+            ) : (
+                <SideBar />
+            )}
+        </div>
 
         <div className='p-4  w-full'>
       {modal && <Qmodal  setModal={setModal} setQuestions={setQuestions} questions={questions} handleformSubmit={handleSubmit}/>}
-                <div>
-                  <p>Post job here..</p>
-                </div>
+              
                 <div className=' w-full flex justify-center'>
                    <div className='bg-purple-50 py-4 rounded-lg'>
 
@@ -154,46 +198,41 @@ function PostJob() {
                         {({errors,touched})=>(
                           <Form >
                               <div className='mx-20 w-4/5 '>
-                                <div className='flex justify-center gap-2'>
-                                    
-                                    <div className="relative w-full min-w-[180px] h-10">
-                                      <Field
-                                        className="peer w-full h-full  text-blue-gray-700 font-sans font-normal outline outline-0 focus:outline-0 disabled:bg-blue-gray-50 disabled:border-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 border focus:border-2 border-t-transparent focus:border-t-transparent text-sm px-3 py-2.5 rounded-[7px] border-blue-gray-200 focus:border-indigo-500"
-                                        placeholder=" " 
-                                        name='title'/>
-                                      <ErrorMessage name='title' component="div" className='text-red-500 text-sm mb-6' />
 
+                                 <div className='grid grid-cols-1 md:grid-cols-2 gap-2'>
+                                      <div className="relative w-full min-w-[180px] h-10">
+                                        <Field
+                                          className="peer w-full h-full  text-blue-gray-700 font-sans font-normal outline outline-0 focus:outline-0 disabled:bg-blue-gray-50 disabled:border-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 border focus:border-2 border-t-transparent focus:border-t-transparent text-sm px-3 py-2.5 rounded-[7px] border-blue-gray-200 focus:border-indigo-500"
+                                          placeholder=" " 
+                                          name='title'/>
+                                        <ErrorMessage name='title' component="div" className='text-red-500 text-sm mb-6' />
+
+                                          <label
+                                          className="flex w-full h-full select-none pointer-events-none absolute left-0 font-normal !overflow-visible truncate peer-placeholder-shown:text-blue-gray-500 leading-tight peer-focus:leading-tight peer-disabled:text-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500 transition-all -top-1.5 peer-placeholder-shown:text-sm text-[11px] peer-focus:text-[11px] before:content[' '] before:block before:box-border before:w-2.5 before:h-1.5 before:mt-[6.5px] before:mr-1 peer-placeholder-shown:before:border-transparent before:rounded-tl-md before:border-t peer-focus:before:border-t-2 before:border-l peer-focus:before:border-l-2 before:pointer-events-none before:transition-all peer-disabled:before:border-transparent after:content[' '] after:block after:flex-grow after:box-border after:w-2.5 after:h-1.5 after:mt-[6.5px] after:ml-1 peer-placeholder-shown:after:border-transparent after:rounded-tr-md after:border-t peer-focus:after:border-t-2 after:border-r peer-focus:after:border-r-2 after:pointer-events-none after:transition-all peer-disabled:after:border-transparent peer-placeholder-shown:leading-[3.75] text-blue-gray-400 peer-focus:text-indigo-500 before:border-blue-gray-200 peer-focus:before:!border-indigo-500 after:border-blue-gray-200 peer-focus:after:!border-indigo-500">
+                                          Title
+                                        </label>
+                                      </div>
+
+                                      <div className="relative w-full min-w-[180px] h-10">
+                                        <Field
+                                          className="peer w-full h-full  text-blue-gray-700 font-sans font-normal outline outline-0 focus:outline-0 disabled:bg-blue-gray-50 disabled:border-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 border focus:border-2 border-t-transparent focus:border-t-transparent text-sm px-3 py-2.5 rounded-[7px] border-blue-gray-200 focus:border-indigo-500"
+                                          placeholder=" "
+                                          name='location' />
+                                        <ErrorMessage name='location' component="div" className='text-red-500 text-sm mb-2' />
                                         <label
-                                        className="flex w-full h-full select-none pointer-events-none absolute left-0 font-normal !overflow-visible truncate peer-placeholder-shown:text-blue-gray-500 leading-tight peer-focus:leading-tight peer-disabled:text-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500 transition-all -top-1.5 peer-placeholder-shown:text-sm text-[11px] peer-focus:text-[11px] before:content[' '] before:block before:box-border before:w-2.5 before:h-1.5 before:mt-[6.5px] before:mr-1 peer-placeholder-shown:before:border-transparent before:rounded-tl-md before:border-t peer-focus:before:border-t-2 before:border-l peer-focus:before:border-l-2 before:pointer-events-none before:transition-all peer-disabled:before:border-transparent after:content[' '] after:block after:flex-grow after:box-border after:w-2.5 after:h-1.5 after:mt-[6.5px] after:ml-1 peer-placeholder-shown:after:border-transparent after:rounded-tr-md after:border-t peer-focus:after:border-t-2 after:border-r peer-focus:after:border-r-2 after:pointer-events-none after:transition-all peer-disabled:after:border-transparent peer-placeholder-shown:leading-[3.75] text-blue-gray-400 peer-focus:text-indigo-500 before:border-blue-gray-200 peer-focus:before:!border-indigo-500 after:border-blue-gray-200 peer-focus:after:!border-indigo-500">
-                                        Title
-                                      </label>
-                                    </div>
+                                          className="flex w-full h-full select-none pointer-events-none absolute left-0 font-normal !overflow-visible truncate peer-placeholder-shown:text-blue-gray-500 leading-tight peer-focus:leading-tight peer-disabled:text-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500 transition-all -top-1.5 peer-placeholder-shown:text-sm text-[11px] peer-focus:text-[11px] before:content[' '] before:block before:box-border before:w-2.5 before:h-1.5 before:mt-[6.5px] before:mr-1 peer-placeholder-shown:before:border-transparent before:rounded-tl-md before:border-t peer-focus:before:border-t-2 before:border-l peer-focus:before:border-l-2 before:pointer-events-none before:transition-all peer-disabled:before:border-transparent after:content[' '] after:block after:flex-grow after:box-border after:w-2.5 after:h-1.5 after:mt-[6.5px] after:ml-1 peer-placeholder-shown:after:border-transparent after:rounded-tr-md after:border-t peer-focus:after:border-t-2 after:border-r peer-focus:after:border-r-2 after:pointer-events-none after:transition-all peer-disabled:after:border-transparent peer-placeholder-shown:leading-[3.75] text-blue-gray-400 peer-focus:text-indigo-500 before:border-blue-gray-200 peer-focus:before:!border-indigo-500 after:border-blue-gray-200 peer-focus:after:!border-indigo-500">
+                                          Location
+                                        </label>
+                                      </div>
 
-                                    <div className="relative w-full min-w-[180px] h-10">
-                                      <Field
-                                        className="peer w-full h-full  text-blue-gray-700 font-sans font-normal outline outline-0 focus:outline-0 disabled:bg-blue-gray-50 disabled:border-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 border focus:border-2 border-t-transparent focus:border-t-transparent text-sm px-3 py-2.5 rounded-[7px] border-blue-gray-200 focus:border-indigo-500"
-                                        placeholder=" "
-                                        name='location' />
-                                      <ErrorMessage name='location' component="div" className='text-red-500 text-sm mb-2' />
-                                      <label
-                                        className="flex w-full h-full select-none pointer-events-none absolute left-0 font-normal !overflow-visible truncate peer-placeholder-shown:text-blue-gray-500 leading-tight peer-focus:leading-tight peer-disabled:text-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500 transition-all -top-1.5 peer-placeholder-shown:text-sm text-[11px] peer-focus:text-[11px] before:content[' '] before:block before:box-border before:w-2.5 before:h-1.5 before:mt-[6.5px] before:mr-1 peer-placeholder-shown:before:border-transparent before:rounded-tl-md before:border-t peer-focus:before:border-t-2 before:border-l peer-focus:before:border-l-2 before:pointer-events-none before:transition-all peer-disabled:before:border-transparent after:content[' '] after:block after:flex-grow after:box-border after:w-2.5 after:h-1.5 after:mt-[6.5px] after:ml-1 peer-placeholder-shown:after:border-transparent after:rounded-tr-md after:border-t peer-focus:after:border-t-2 after:border-r peer-focus:after:border-r-2 after:pointer-events-none after:transition-all peer-disabled:after:border-transparent peer-placeholder-shown:leading-[3.75] text-blue-gray-400 peer-focus:text-indigo-500 before:border-blue-gray-200 peer-focus:before:!border-indigo-500 after:border-blue-gray-200 peer-focus:after:!border-indigo-500">
-                                        Location
-                                      </label>
-                                    </div>
-                                </div>
-                                <div className='mt-3 pl-'>
-                                  <span className='text-xs font-medium text-gray-500 '>Salery in lpa</span>
-                                </div>
-                                <div className='flex justify-center gap-2'>
-                                    
-                                    <div className="relative w-full min-w-[180px] h-10">
+                                    <div className="relative w-full min-w-[180px] h-10 ">
                                       <Field
                                         className="peer w-full h-full  text-blue-gray-700 font-sans font-normal outline outline-0 focus:outline-0 disabled:bg-blue-gray-50 disabled:border-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 border focus:border-2 border-t-transparent focus:border-t-transparent text-sm px-3 py-2.5 rounded-[7px] border-blue-gray-200 focus:border-indigo-500"
                                         placeholder=" " name="saleryfrom" type='number'/>
                                       <ErrorMessage name='saleryfrom' component="div" className='text-red-500 text-sm mb-2' />
                                       <label
                                         className="flex w-full h-full select-none pointer-events-none absolute left-0 font-normal !overflow-visible truncate peer-placeholder-shown:text-blue-gray-500 leading-tight peer-focus:leading-tight peer-disabled:text-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500 transition-all -top-1.5 peer-placeholder-shown:text-sm text-[11px] peer-focus:text-[11px] before:content[' '] before:block before:box-border before:w-2.5 before:h-1.5 before:mt-[6.5px] before:mr-1 peer-placeholder-shown:before:border-transparent before:rounded-tl-md before:border-t peer-focus:before:border-t-2 before:border-l peer-focus:before:border-l-2 before:pointer-events-none before:transition-all peer-disabled:before:border-transparent after:content[' '] after:block after:flex-grow after:box-border after:w-2.5 after:h-1.5 after:mt-[6.5px] after:ml-1 peer-placeholder-shown:after:border-transparent after:rounded-tr-md after:border-t peer-focus:after:border-t-2 after:border-r peer-focus:after:border-r-2 after:pointer-events-none after:transition-all peer-disabled:after:border-transparent peer-placeholder-shown:leading-[3.75] text-blue-gray-400 peer-focus:text-indigo-500 before:border-blue-gray-200 peer-focus:before:!border-indigo-500 after:border-blue-gray-200 peer-focus:after:!border-indigo-500">
-                                        from
+                                        Salery from
                                       </label>
                                     </div>
 
@@ -204,11 +243,12 @@ function PostJob() {
                                       <ErrorMessage name='saleryto' component="div" className='text-red-500 text-sm mb-2' />
                                       <label
                                         className="flex w-full h-full select-none pointer-events-none absolute left-0 font-normal !overflow-visible truncate peer-placeholder-shown:text-blue-gray-500 leading-tight peer-focus:leading-tight peer-disabled:text-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500 transition-all -top-1.5 peer-placeholder-shown:text-sm text-[11px] peer-focus:text-[11px] before:content[' '] before:block before:box-border before:w-2.5 before:h-1.5 before:mt-[6.5px] before:mr-1 peer-placeholder-shown:before:border-transparent before:rounded-tl-md before:border-t peer-focus:before:border-t-2 before:border-l peer-focus:before:border-l-2 before:pointer-events-none before:transition-all peer-disabled:before:border-transparent after:content[' '] after:block after:flex-grow after:box-border after:w-2.5 after:h-1.5 after:mt-[6.5px] after:ml-1 peer-placeholder-shown:after:border-transparent after:rounded-tr-md after:border-t peer-focus:after:border-t-2 after:border-r peer-focus:after:border-r-2 after:pointer-events-none after:transition-all peer-disabled:after:border-transparent peer-placeholder-shown:leading-[3.75] text-blue-gray-400 peer-focus:text-indigo-500 before:border-blue-gray-200 peer-focus:before:!border-indigo-500 after:border-blue-gray-200 peer-focus:after:!border-indigo-500">
-                                        to
+                                        Salery to
                                       </label>
                                     </div>
-                                </div>
-                                <div className='flex justify-center mt-3 gap-2'>
+                               
+
+                               
                                   <div className=' w-full'>
                                       <label htmlFor="jobtype" className='ml-2 text-xs font-medium text-gray-500'>Job Type</label>
                                       <Field as='select' name="jobtype" 
@@ -232,10 +272,10 @@ function PostJob() {
                                       <option value="Hybrid">Hybrid</option>
                                     </Field>
                                     <ErrorMessage name='jobmode' component="div" className='text-red-500 text-sm mb-2' />
-
                                   </div>
-                                </div>
-                                <div className='flex justify-center mt-3'>
+                               
+
+                               
                                   <div className='w-full'>
                                     <label htmlFor="experiance" className='ml-2 text-xs font-medium text-gray-500'>Experiance</label>
                                       <Field as='select' name="experiance"                  
@@ -258,7 +298,9 @@ function PostJob() {
                                       />
                                       <ErrorMessage name='applyBefore' component="div" className='text-red-500 text-sm mb-2' />
                                   </div>
-                                </div>
+                               
+                                 </div>
+                                      
                                 <div className='flex flex-col relative w-full mt-3'>
                                     <label
                                         className="flex w-full h-full select-none pointer-events-none absolute left-0 font-normal !overflow-visible truncate peer-placeholder-shown:text-blue-gray-500 leading-tight peer-focus:leading-tight peer-disabled:text-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500 transition-all -top-1.5 peer-placeholder-shown:text-sm text-[11px] peer-focus:text-[11px] before:content[' '] before:block before:box-border before:w-2.5 before:h-1.5 before:mt-[6.5px] before:mr-1 peer-placeholder-shown:before:border-transparent before:rounded-tl-md before:border-t peer-focus:before:border-t-2 before:border-l peer-focus:before:border-l-2 before:pointer-events-none before:transition-all peer-disabled:before:border-transparent after:content[' '] after:block after:flex-grow after:box-border after:w-2.5 after:h-1.5 after:mt-[6.5px] after:ml-1 peer-placeholder-shown:after:border-transparent after:rounded-tr-md after:border-t peer-focus:after:border-t-2 after:border-r peer-focus:after:border-r-2 after:pointer-events-none after:transition-all peer-disabled:after:border-transparent peer-placeholder-shown:leading-[3.75] text-blue-gray-400 peer-focus:text-indigo-500 before:border-blue-gray-200 peer-focus:before:!border-indigo-500 after:border-blue-gray-200 peer-focus:after:!border-indigo-500">

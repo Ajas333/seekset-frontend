@@ -5,7 +5,6 @@ import { IoMdClose } from "react-icons/io";
 
 
 function AcceptRejectModal({setModal,modalData,setAction,action}) {
-    // const baseURL='http://127.0.0.1:8000'
     const baseURL = import.meta.env.VITE_API_BASEURL
     const  modalRef = useRef();
     const closeModal =(e)=>{
@@ -13,7 +12,6 @@ function AcceptRejectModal({setModal,modalData,setAction,action}) {
         setModal();
          }
        }
-      //  console.log("modl data",modalData)
     
     const handleAccept = ()=>{
      const action = "accept"
@@ -36,7 +34,6 @@ function AcceptRejectModal({setModal,modalData,setAction,action}) {
         formData.append("action",action)
         try{
             const response = await axios.post(baseURL+'/api/interview/status/',formData)
-            // console.log("responce........",response)
             if (response.status == 200){
               toast.success(response.data.message,{
                 position: "top-center",
@@ -52,7 +49,6 @@ function AcceptRejectModal({setModal,modalData,setAction,action}) {
             }
         }
         catch(error){
-            // console.log(error)
         }
     }
 

@@ -11,6 +11,8 @@ import { LiaIndustrySolid } from "react-icons/lia";
 import { FaLink } from "react-icons/fa6";
 import { FaRegAddressCard } from "react-icons/fa";
 import axios from "axios"
+import Drawer from 'react-modern-drawer'
+import 'react-modern-drawer/dist/index.css'
 import {useDispatch} from 'react-redux'
 import { set_user_basic_details } from "../../../Redux/UserDetails/userBasicDetailsSlice";
 import Modal from '../../../components/employer/utilities/Modal';
@@ -21,6 +23,8 @@ import RoleModal from '../../../components/employer/utilities/RoleModal';
 
 function EmpProfile() {
   const [showModal,setShowModal] =useState(false)
+  const [isOpen, setIsOpen] =useState(false)
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
   const baseURL = import.meta.env.VITE_API_BASEURL
   const [section,setSection] =useState("")
   const [action,setAction] = useState(false)
@@ -36,6 +40,22 @@ function EmpProfile() {
   const [imgError,setImgError] = useState('')
   const [roleModal, setRoleModal] = useState(false)
 
+  const toggleDrawer = () => {
+    setIsOpen(!isOpen)
+}
+
+const handleResize = () => {
+  setIsSmallScreen(window.innerWidth < 640);
+};
+
+useEffect(() => {
+  window.addEventListener('resize', handleResize);
+  handleResize(); // Check initial screen size
+
+  return () => {
+      window.removeEventListener('resize', handleResize);
+  };
+}, []);
   
   const toggleModal = (section = "") => {
     setShowModal(true);
@@ -169,9 +189,35 @@ function EmpProfile() {
   // console.log("profile data...................",profileData)
   return (
     <div className='pt-14 flex'>
-      <div>
-        <SideBar/>
-      </div>
+       <div>
+            {isSmallScreen ? (
+                <>
+                    <button onClick={toggleDrawer} title="Add New" className="group cursor-pointer outline-none hover:rotate-90 duration-300">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="40px" height="40px" viewBox="0 0 24 24"
+                        className="stroke-indigo-300 fill-none group-hover:fill-indigo-400 group-active:stroke-indigo-200 group-active:fill-indigo-300 group-active:duration-0 duration-300"
+                      >
+                    <path
+                      d="M12 22C17.5 22 22 17.5 22 12C22 6.5 17.5 2 12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22Z"
+                      strokeWidth="1.5"
+                    ></path>
+                      <path d="M8 12H16" strokeWidth="1.5"></path>
+                      <path d="M12 16V8" strokeWidth="1.5"></path>
+                    </svg>
+                  </button>
+
+                    <Drawer
+                        open={isOpen}
+                        onClose={toggleDrawer}
+                        direction='left'
+                        className='bla bla bla'
+                    >
+                        <div className='bg-gray-50'><SideBar /></div>
+                    </Drawer>
+                </>
+            ) : (
+                <SideBar />
+            )}
+        </div>
         {showModal && <Modal setShowModal={setShowModal} section={section} action={action} setAction={setAction} profileData={profileData}/>}
        {modal && <ProfilepicModal setCroppedImageUrl={setCroppedImageUrl} setImageUrl={setImageUrl} setImgError={setImgError} imageUrl={imageUrl} closeModal={() => setModal(false)} onCropSubmit={handleCropSubmit} />}
       {roleModal && <RoleModal setRoleModal={setRoleModal} action={action} setAction={setAction} />}
@@ -199,18 +245,16 @@ function EmpProfile() {
                 </div>
                     {/* company info */}
                     <div className='flex justify-center mt-5'>
-                        <div className='w-4/6 py-7'>
+                        <div className=' w-5/6  md:w-4/6 py-7'>
                             <div className='bg-gray-50 rounded-md relative py-1 px-2'>
                                 <div>
                                     <div className="absolute top-0 right-0 px-2 py-2 ">
                                     <CiEdit className="text-xl text-blue-600 font-medium cursor-pointer" onClick={() => toggleModal("companyInfo")} />
                                     </div>
-                                    <div className="font-bold text-xl underline text-gray-500">
-                                         Company Info
-                                    </div>
+                                   
                                 </div>
 
-                                <div className='mt-2'>
+                                {/* <div className='mt-2'>
                                     
                                     <div className='grid grid-cols-4'>
                                         <div className=''>
@@ -267,7 +311,72 @@ function EmpProfile() {
                                             <span className="text-gray-600 font-semibold">{profileData.about}</span>
                                         </div>
                                     </div>
+                                </div> */}
+                                <div className='bg-gray-50 rounded-md relative py-1 px-2 '>
+                                  <div>
+                                    <div className="absolute top-0 right-0 px-2 py-2 ">
+                                      <CiEdit className="text-xl text-blue-600 font-medium cursor-pointer" onClick={() => toggleModal("companyInfo")} />
+                                    </div>
+                                    <div className="font-bold text-xl underline text-gray-500">
+                                      Company Info
+                                    </div>
+                                  </div>
+                                  <div className='mt-2'>
+                                    <div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
+                                      <div className=''>
+                                        <div className="flex items-center gap-1">
+                                          <RxAvatar className="w-4 h-4 text-gray-500" />
+                                          <span className="text-blue-600  font-bold">{profileData.user_full_name}</span>
+                                        </div>
+                                      </div>
+                                      <div className=''>
+                                        <div className="flex items-center gap-1">
+                                          <MdOutlineMail className="w-4 h-4 text-gray-500" />
+                                          <span className="text-gray-600 font-semibold">{profileData.user_email}</span>
+                                        </div>
+                                      </div>
+                                      <div className=''>
+                                        <div className="flex items-center gap-1">
+                                          <FaPhone className="w-4 h-4 text-gray-500" />
+                                          <span className="text-gray-600 font-semibold">{profileData.phone}</span>
+                                        </div>
+                                      </div>
+                                      <div className=''>
+                                        <div className="flex items-center gap-1">
+                                          <IoLocationOutline className="w-5 h-5 text-gray-500" />
+                                          <span className="text-gray-600 font-semibold">{profileData.headquarters}</span>
+                                        </div>
+                                      </div>
+                                      <div className=''>
+                                        <div className="flex items-center gap-1">
+                                          <LiaIndustrySolid className="w-5 h-5 text-gray-500" />
+                                          <span className="text-gray-600 font-semibold">{profileData.industry}</span>
+                                        </div>
+                                      </div>
+                                      <div className=''>
+                                        <div className="flex items-center gap-1">
+                                          <FaLink className="w-5 h-5 text-gray-500" />
+                                          <span className="text-gray-600 font-semibold">{profileData.website_link}</span>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div className='grid grid-cols-1 mt-3'>
+                                      <div className=''>
+                                        <div className="flex items-center gap-1">
+                                          <FaRegAddressCard className="w-5 h-5 text-gray-500" />
+                                          <span className="text-gray-600 font-semibold">{profileData.address}</span>
+                                        </div>
+                                      </div>
+                                      <div className=''>
+                                        <div className="flex flex-col gap-1 mt-3">
+                                          <p className='text-gray-700 font-bold'>About</p>
+                                          <span className="text-gray-600 font-semibold">{profileData.about}</span>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
                                 </div>
+
                             </div>
 
                             <div className='bg-gray-50 rounded-md relative py-1 px-2 mt-2'>

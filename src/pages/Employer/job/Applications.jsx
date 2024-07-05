@@ -4,10 +4,16 @@ import { useNavigate,Link } from 'react-router-dom'
 import ApplyCard from '../../../components/employer/utilities/ApplyCard'
 import CandidateView from './CandidateView'
 import SideBar from '../../../components/employer/SideBar'
-
+import Drawer from 'react-modern-drawer'
+import 'react-modern-drawer/dist/index.css'
+import ApplicationData from '../../../components/employer/utilities/ApplicationData'
+import { FaArrowLeft } from "react-icons/fa6";
 
 
 function Applications() {
+    const [isOpen, setIsOpen] =useState(false)
+    const [applicationOpen,setApplicationOpne] = useState(false)
+    const [isSmallScreen, setIsSmallScreen] = useState(false);
     const [jobData, setJobData] = useState([])
     const [selectedJob, setSelectedJob] = useState(null);
     const [change,setChange] = useState(true)
@@ -17,6 +23,27 @@ function Applications() {
     // const baseURL='http://127.0.0.1:8000/'
     const baseURL = import.meta.env.VITE_API_BASEURL
     const token = localStorage.getItem('access')
+
+    const toggleDrawer = () => {
+        setIsOpen(!isOpen)
+    }
+
+    const toggleApplication = () =>{
+        setApplicationOpne(!applicationOpen)
+    }
+    
+    const handleResize = () => {
+      setIsSmallScreen(window.innerWidth < 768);
+    };
+    
+    useEffect(() => {
+      window.addEventListener('resize', handleResize);
+      handleResize(); // Check initial screen size
+    
+      return () => {
+          window.removeEventListener('resize', handleResize);
+      };
+    }, []);
 
     useEffect(() => {
         const fetchJobDetails = async ()=>{
@@ -50,99 +77,88 @@ function Applications() {
 }, [])
 
 
-
-const formatDate = (dateTimeString) => {
-    const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
-    return new Date(dateTimeString).toLocaleDateString(undefined, options);
-}
-
-// console.log("job data",jobData)
-
 const handleJobClick =(job)=>{
     setSelectedJob(job);
-    if (job.questions !== null){
+    toggleApplication()
 
-        setQuestions(job.questions)
-    }
-    else{
-        setQuestions([])
-    }
-//    console.log("jobbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",job)
 }
 
-// console.log("selected jobs.......",selectedJob)
-// console.log("current candidatemigkjg",current)
-// console.log("questionsssssssssssssssss",questions)
 return (
-    <div className=' flex pt-12'>
-        <div>
-        <SideBar/>
-        </div>
-        <div className='w-full'>
-            <div className='flex gap-3'>
-            <div className=' max-h-screen w-2/5 p-3 flex flex-col text-gray-700 bg-gray-100 shadow-md bg-clip-border rounded-xl'>
-                <div className='flex bg-white mb-2 p-3 rounded-md px '>
-                    <span className='text-lg font-bold text-gray-600'>Applications</span>
+    <div className=' flex flex-col md:flex-row pt-14 md:pt-12 min-h-[35rem]'>
+        <div className=''>
+            {isSmallScreen ? (
+                <>
+                <div className='flex flex-row fixed z-50'>
+                <button onClick={toggleDrawer} title="Add New" className="group cursor-pointer outline-none hover:rotate-90 duration-300">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="40px" height="40px" viewBox="0 0 24 24"
+                        className="stroke-indigo-300 fill-none group-hover:fill-indigo-400 group-active:stroke-indigo-200 group-active:fill-indigo-300 group-active:duration-0 duration-300"
+                      >
+                    <path
+                      d="M12 22C17.5 22 22 17.5 22 12C22 6.5 17.5 2 12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22Z"
+                      strokeWidth="1.5"
+                    ></path>
+                      <path d="M8 12H16" strokeWidth="1.5"></path>
+                      <path d="M12 16V8" strokeWidth="1.5"></path>
+                    </svg>
+                  </button>
+                  
                 </div>
-                <div className='overflow-y-auto scroll-smooth max-h-full'>
-                    {jobData.map((job)=>(
-                        <div key={job.id} onClick={() => handleJobClick(job)} className=' relative bg-white rounded-md hover:shadow-md py-3 mb-4 '>
-                            <div className="absolute top-0 right-0 bg-red-100 text-red-900 px-2 py-1 rounded-bl-lg">
-                                Expiry: {job.applyBefore}
-                            </div>
-                            <div className="absolute bottom-0 right-0   px-2 py-1 rounded-bl-lg">
-                              <span className='bg-green-400 rounded-full px-2'>{job.applications.length}</span>
-                            </div>
-                        
-        
-                        <div className='flex gap-3 ml-2'>
-                            <div className=''>
-                                <div>
-                                    <p className="overflow-hidden md:text-2xl font-semibold sm:text-xl">{job.title}</p>
-                                    <p className='text-base text-gray-500'>{job.employer_name}</p>
+                    <Drawer
+                        open={isOpen}
+                        onClose={toggleDrawer}
+                        direction='left'
+                        className='bla bla bla'
+                    >
+                        <div className='bg-gray-50'><SideBar /></div>
+                    </Drawer>
+                    <Drawer
+                        open={applicationOpen}
+                        onClose={toggleApplication}
+                        size={580}
+                        direction='bottom'
+                        className="" >
+                        <div className='className="bg-gray-50 overflow-y-auto h-64"'>
+                            <div className=' md:mt-0 md:w-3/5 max-h-screen p-3 mr-3  text-gray-700 bg-gray-100 shadow-md bg-clip-border rounded-xl'>                        
+                                <div className='flex bg-white mb-2 p-3 rounded-md px relative'>
+                                <div onClick={()=>setChange(!change)} className=' absolute right-2 hover:right-4  transition-transform  text-blue-400 hover:text-blue-600 '>
+                                    <FaArrowLeft size={27}  />
+                                </div>
+                                    <span className='text-lg font-bold text-gray-600'>Applied Candidates</span>
+                                </div>
+                                <div className='overflow-y-auto scroll-smooth max-h-full '>
+                                    {change ? 
+                                        (<ApplyCard selectedJob={selectedJob} setChange={setChange} setCurrent={setCurrent} setStatus={setStatus}/>) : 
+                                        ( <CandidateView selectedJob={selectedJob} setChange={setChange} current={current} questions={questions}/>)}
                                 </div>
                             </div>
                         </div>
-        
-                        <div className="col-span-11 flex flex-col pr-8 text-left sm:pl-4">
-                            
-                            
-                            <div className="mt-5 flex flex-col space-y-3 text-sm font-medium text-gray-500 sm:flex-row sm:items-center sm:space-y-0 sm:space-x-2">
-                            <div className="">Job Posted:
-                                <span className="ml-2 mr-3 rounded-full bg-green-100 px-2 py-0.5 text-green-900">{formatDate(job.posteDate)}</span>
-                            </div>
-                            <div className="">Location:
-                                <span className="ml-2 mr-3 rounded-full bg-yellow-100 px-2 py-0.5 text-blue-900">{job.location}</span>
-                            </div>
-                            </div>
-                            
-                            <div className="mt-5 flex flex-col space-y-3 text-sm font-medium text-gray-500 sm:flex-row sm:items-center sm:space-y-0 sm:space-x-2">
-                            <div className="">Experience:
-                                <span className="ml-2 mr-3 rounded-full bg-pink-100 px-2 py-0.5 text-green-900">{job.experiance}</span>
-                            </div>
-                            <div className="">Salary:
-                                <span className="ml-2 mr-3 rounded-full bg-blue-100 px-2 py-0.5 text-blue-900">{job.lpa} lpa</span>
-                            </div>
-                            </div>
-                        </div>
-                    </div>
-                    ))}
-                    
+                    </Drawer>
+                </>
+            ) : (
+                <SideBar />
+            )}
+        </div>
+        <div className='w-screen mt-5 md:mt-3 '>
+            <div className='flex gap-3'>
+                <div className=' w-full mx-2 mt-4 md:mt-0 md:mx-0 md:w-2/5'>
+                    <ApplicationData jobData={jobData} handleJobClick={handleJobClick} toggleApplication={toggleApplication} />
                 </div>
-            </div>
-            <div className='w-3/5 max-h-screen p-3 mr-3 flex flex-col text-gray-700 bg-gray-100 shadow-md bg-clip-border rounded-xl'>
-                    {/* <StatusJob selectedJob={selectedJob}/> */}
-                    <div className='flex bg-white mb-2 p-3 rounded-md px '>
-                        <span className='text-lg font-bold text-gray-600'>Applied Candidates</span>
-                    </div>
+                    <div className='w-full  md:mt-0 hidden md:block md:w-3/5 max-h-screen p-3 mr-3  text-gray-700 bg-gray-100 shadow-md bg-clip-border rounded-xl'>
+                        
+                            <div className='relative flex bg-white mb-2 p-3 rounded-md px '>
+                                <span className='text-lg font-bold text-gray-600'>Applied Candidates</span>
+                                <div onClick={()=>setChange(!change)} className=' absolute right-2 hover:right-4  transition-transform  text-blue-400 hover:text-blue-600 '>
+                                    <FaArrowLeft size={27}  />
+                                </div>
+                            </div>
 
-                    <div className='overflow-y-auto scroll-smooth max-h-full'>
-                        {change ? 
-                            (<ApplyCard selectedJob={selectedJob} setChange={setChange} setCurrent={setCurrent} setStatus={setStatus}/>) : 
-                            ( <CandidateView selectedJob={selectedJob} setChange={setChange} current={current} questions={questions}/>)}
-                    
+                            <div className='overflow-y-auto scroll-smooth max-h-full '>
+                                {change ? 
+                                    (<ApplyCard selectedJob={selectedJob} setChange={setChange} setCurrent={setCurrent} setStatus={setStatus}/>) : 
+                                    ( <CandidateView selectedJob={selectedJob} setChange={setChange} current={current} questions={questions}/>)}
+                            
+                            </div>
                     </div>
-            </div>
             </div>
         </div>
     </div>

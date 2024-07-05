@@ -8,7 +8,6 @@ import axios from 'axios';
 
 
 function Modal({setShowModal,section,setAction,action,profileData}) {
-    // const baseURL='http://127.0.0.1:8000/'
     const baseURL = import.meta.env.VITE_API_BASEURL
     const token = localStorage.getItem('access'); 
     const  modalRef = useRef();
@@ -23,9 +22,7 @@ function Modal({setShowModal,section,setAction,action,profileData}) {
         }
         }
 
-    // console.log("section......................",section,profileData)
     const handleCompanyInfo = (values,{setSubmitting})=>{
-        // console.log("company info",values)
         const action = "companyInfo"
         const formData = new FormData();
         formData.append("full_name",values.full_name);
@@ -51,7 +48,6 @@ function Modal({setShowModal,section,setAction,action,profileData}) {
     };
 
     const handleHrsubmit = ()=>{
-        // console.log("inside hr function",info)
         const action = "companyInfo"
         const formData = new FormData();
         formData.append("hr_name",info.hr_name);
@@ -71,7 +67,6 @@ function Modal({setShowModal,section,setAction,action,profileData}) {
                 'Content-Type': 'multipart/form-data'
                 }
             })
-            // console.log(response)
             if(response.status == 200 ){
                 toast.success(response.data.message,{
                 position: "top-center",
@@ -81,7 +76,6 @@ function Modal({setShowModal,section,setAction,action,profileData}) {
             }
         }
         catch(error){
-            // console.log(error)
         }
     }
 
@@ -163,6 +157,7 @@ const renderContent = () =>{
                    )} 
                    </Formik>
                 </div>
+                
             );
         
     };
@@ -170,7 +165,7 @@ const renderContent = () =>{
 
 return (
     <div ref={modalRef} onClick={closeModal} className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center z-20">
-    <div className='mt-10 flex flex-col text-white  w-2/6 h-5/6 '>
+    <div className='mt-10 flex flex-col text-white w-5/6  md:w-2/6 h-5/6 '>
      <button className='place-self-end' onClick={()=>setShowModal(false)}><IoMdClose size={30}/></button>
      <div className='bg-indigo-200 rounded-xl px-10 py-5  items-center mx-4  max-h-full overflow-auto'>
        

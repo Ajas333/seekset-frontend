@@ -18,10 +18,8 @@ function QModal({setModal,questions,setAnswers,answers,handleApply}) {
       const handleSubmit = (e) => {
         e.preventDefault();
         handleApply();
-        // console.log(answers);
-        // You can send the answers to the server or handle them as needed
+       
       };
-    // console.log(questions)
   return (
     <div ref={modalRef} onClick={closeModal} className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center z-50">
       <div className='mt-10 flex flex-col text-white w-2/6'>

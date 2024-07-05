@@ -3,6 +3,8 @@ import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import {Link} from 'react-router-dom'
+import Drawer from 'react-modern-drawer'
+import 'react-modern-drawer/dist/index.css'
 import StatusJob from '../../../components/candidate/utilities/StatusJob';
 
 
@@ -14,6 +16,11 @@ function ApplyedJob() {
     const authentication_user = useSelector((state)=> state.authentication_user);
     const [jobData, setJobData] = useState([])
     const [selectedJob, setSelectedJob] = useState(null);
+    const [isOpen, setIsOpen] =useState(false)
+
+    const toggleDrawer = () => {
+        setIsOpen(!isOpen)
+    }
 
     useEffect(() => {
             const fetchApplyedJobs = async ()=>{
@@ -47,13 +54,14 @@ function ApplyedJob() {
     }
     const handleJobClick = (job) => {
         setSelectedJob(job);
+        toggleDrawer()
       };
     // console.log("job data",jobData)
     // console.log("current job data",selectedJob)
   return (
     <div className='mt-14'>
       <div className='flex gap-3'>
-        <div className=' max-h-full w-2/5 p-3 flex flex-col text-gray-700 bg-gray-100 shadow-md bg-clip-border rounded-xl'>
+        <div className=' max-h-full w-full md:w-2/5 p-3 flex flex-col text-gray-700 bg-gray-100 shadow-md bg-clip-border rounded-xl'>
             <div className='flex bg-white mb-2 p-3 rounded-md px '>
                 <span className='text-lg font-bold text-gray-600'>Applyed Jobs</span>
             </div>
@@ -103,8 +111,22 @@ function ApplyedJob() {
                 ))}
             </div>
         </div>
-        <div className='w-3/5 p-3 mr-3 flex flex-col text-gray-700 bg-gray-100 shadow-md bg-clip-border rounded-xl'>
-                <StatusJob selectedJob={selectedJob}/>
+        <div className='hidden md:block  w-3/5 p-3 mr-3  text-gray-700 bg-gray-100 shadow-md bg-clip-border rounded-xl'>
+                <StatusJob toggleDrawer={toggleDrawer} selectedJob={selectedJob}/>
+               
+        </div>
+        <div className='block md:hidden'>
+        <Drawer
+                open={isOpen}
+                onClose={toggleDrawer}
+                direction='bottom'
+                size={600}
+                className='bla bla bla'
+            >
+                <div className='bg-gray-50'>
+                    <StatusJob toggleDrawer={toggleDrawer} selectedJob={selectedJob}/>
+                </div>
+            </Drawer>
         </div>
       </div>
     </div>

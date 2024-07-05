@@ -128,7 +128,7 @@ function EmpProfileCreation() {
         </div>
         <div className='w-full  md:w-3/5 flex justify-end'>
           <div className='bg-white w-full h-full md:rounded-l-lg shadow-2xl'>
-            <div className='h-full pb-5 pt-14'>
+            <div className='h-full pb-5 pt-14 '>
               <div>
                 <p className='text-2xl font-medium mx-3 mt-3 text-blue-800'>About Company</p>
                 <div className="mt-4 ">
@@ -139,52 +139,50 @@ function EmpProfileCreation() {
                   >
                     {({ errors, touched, isSubmitting }) => (
                       <Form > 
-                          <div className='mx-20 w-4/5 '>
+                          <div className='md:mx-20 md:w-4/5 px-9 md:px-0 '>
                           {/* name and phone */}
-                            <div className='flex justify-center gap-2'>
-                              <div className='flex flex-col w-1/2'>
+                            <div className='grid grid-cols-1 md:grid-cols-2 gap-3'>
+                              <div className='flex flex-col '>
                                 <input type="text" placeholder='Company Name' value={authentication_user.name}
                                   className="w-full mb-5 px-4 py-3 mr-2 text-sm font-medium outline-none focus:bg-grey-400 placeholder:text-grey-700 bg-grey-500 text-dark-grey-900 rounded-2xl"
                                   readOnly
                                 />
                               </div>
-                              <div className='flex flex-col w-1/2'>
+                              <div className='flex flex-col '>
                                 <Field type="text" placeholder='Mobile Number' name="phone"  
                                   className={`flex ${errors.phone && touched.phone ? 'border-red-500' : 'mb-5'} items-center w-full  px-4 py-3 mr-2 text-sm font-medium outline-none focus:bg-grey-400 placeholder:text-grey-700 bg-grey-500 text-dark-grey-900 rounded-2xl`}
                                 />
                                 <ErrorMessage name='phone' component="div" className='text-red-500 text-sm mb-2' />
                               </div>
-
-                            </div>
-                            {/* email and website */}
-                            <div className='flex gap-2'>
-                              <div className='flex flex-col w-1/2'>
+                              <div className='flex flex-col'>
                                 <input type="text" placeholder='Email' value={authentication_user.email}
                                   className="flex items-center w-full mb-5  px-4 py-3 text-sm font-medium outline-none focus:bg-grey-400 placeholder:text-grey-700 bg-grey-500 text-dark-grey-900 rounded-2xl"
                                   readOnly
                                 />
                               </div>
-                              <div className='flex flex-col w-1/2'>
+                              <div className='flex flex-col '>
                                 <input type="text" placeholder='Company Website' name="website_link" 
                                   className={`flex ${errors.website_link && touched.website_link ? 'border-red-500' : 'mb-5'} items-center w-full  px-4 py-3 mr-2 text-sm font-medium outline-none focus:bg-grey-400 placeholder:text-grey-700 bg-grey-500 text-dark-grey-900 rounded-2xl`}
                                 />
                                 <ErrorMessage name='website_link' component="div" className='text-red-500 text-sm mb-2' />
                               </div>
-                            </div>
-                            {/* headquayers and industry */}
-                            <div className='flex justify-center gap-2'>
-                              <div className='flex flex-col w-1/2'>
+                              <div className='flex flex-col '>
                                 <Field type="text" placeholder='Headquaters' name='headquarters' 
                                   className={`w-full ${errors.headquarters && touched.headquarters ? 'border-red-500' : 'mb-5'} mb-5  px-4 py-3 mr-2 text-sm font-medium outline-none focus:bg-grey-400 placeholder:text-grey-700 bg-grey-500 text-dark-grey-900 rounded-2xl`}
                                 />
                                 <ErrorMessage name='headquarters' component="div" className='text-red-500 text-sm mb-2' />
                               </div>
-                              <div className='flex flex-col w-1/2'>
+                              <div className='flex flex-col '>
                                 <Field type="text" placeholder='Industry Type' name="industry" 
                                   className={`flex ${errors.industry && touched.industry ? 'border-red-500' : 'mb-5'} items-center w-full mb-5 px-4 py-3 mr-2 text-sm font-medium outline-none focus:bg-grey-400 placeholder:text-grey-700 bg-grey-500 text-dark-grey-900 rounded-2xl`}
                                 />
                                 <ErrorMessage name='industry' component="div" className='text-red-500 text-sm mb-2'/>
                               </div>
+                            </div>
+                           
+                            {/* headquayers and industry */}
+                            <div className='flex justify-center gap-2'>
+                             
                             </div>
                             {/* about */}
                             <div className='flex '>

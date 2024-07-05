@@ -4,11 +4,9 @@ import { Formik, Form, Field,ErrorMessage } from 'formik';
 import { ProfileEditSchema,EducationSchema } from '../../../validation/CandidateProfileValidation';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-// import { baseURL } from '../../Urls';
 
 
 function Modal({setShowModal,section, modalData,userId,setAction,action}) {
-  // const baseURL='http://127.0.0.1:8000/'
   const baseURL = import.meta.env.VITE_API_BASEURL
   const token = localStorage.getItem('access'); 
   const[data,setData] = useState([])
@@ -29,7 +27,6 @@ function Modal({setShowModal,section, modalData,userId,setAction,action}) {
        }
      }
   const handlePersonal = async(values,{setSubmitting})=>{
-      // console.log(values)
       const action ="personal"
       const formData = new FormData();
       formData.append("full_name",values.username);
@@ -45,7 +42,6 @@ function Modal({setShowModal,section, modalData,userId,setAction,action}) {
   }   
 
   const handleEducation = async(values,{setSubmitting})=>{
-    // console.log(values)
     const action = "education"
     const formData = new FormData();
     formData.append("education",values.education);
@@ -81,7 +77,6 @@ function Modal({setShowModal,section, modalData,userId,setAction,action}) {
   };
 
   const handleInfoSubmit = () =>{
-    // console.log(info)
     const action = "otherinfo"
     const formData = new FormData();
     formData.append("linkedin",info.linkedin || modalData.linkedin);
@@ -94,7 +89,6 @@ function Modal({setShowModal,section, modalData,userId,setAction,action}) {
     handleSubmit(formData)
   }
   const handleSubmit = async(formData)=>{
-        // console.log(formData)
       try{
         const response = await axios.post(baseURL+'/api/account/user/edit/',formData,{
           headers:{
@@ -103,7 +97,6 @@ function Modal({setShowModal,section, modalData,userId,setAction,action}) {
             'Content-Type': 'multipart/form-data'
           }
         })
-        // console.log(response)
         if(response.status == 200 ){
           toast.success(response.data.message,{
             position: "top-center",
@@ -113,7 +106,6 @@ function Modal({setShowModal,section, modalData,userId,setAction,action}) {
         }
       }
       catch(error){
-        // console.log(error)
       }
   }
     useEffect(() => {
@@ -295,12 +287,10 @@ function Modal({setShowModal,section, modalData,userId,setAction,action}) {
                     <div class="mb-2 basis-5/6">
                       <label for="linkedin"  className="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Linkedin Link</label>
                       <input name='linkedin'  onChange={handleChange}  type="text" defaultValue={modalData.linkedin}  className={`bg-gray-50 border border-gray-300  text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500`} />
-                      {/* <ErrorMessage name='linkedin' component='div' className='text-red-500 text-sm mb-2' /> */}
                       </div>
                     <div class="mb-2 basis-5/6">
                       <label for="github"  className="block mb-1 text-sm font-medium text-gray-900 dark:text-white">github</label>
                       <input name='github'  onChange={handleChange} type="text" defaultValue={modalData.github}  className={`bg-gray-50 border border-gray-300  text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500`} />
-                      {/* <ErrorMessage name='github' component='div' className='text-red-500 text-sm mb-2' /> */}
                       </div> 
                     <div class="mb-2 basis-5/6">
                       <label for="resume"  className="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Resume</label>
@@ -321,7 +311,7 @@ function Modal({setShowModal,section, modalData,userId,setAction,action}) {
   
   return (
     <div ref={modalRef} onClick={closeModal} className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center">
-     <div className='mt-10 flex flex-col text-white  w-2/6'>
+     <div className='mt-10 flex flex-col text-white w-5/6  md:w-2/6'>
       <button className='place-self-end' onClick={()=>setShowModal(false)}><IoMdClose size={30}/></button>
       <div className='bg-indigo-200 rounded-xl px-10 py-5  items-center mx-4 '>
         

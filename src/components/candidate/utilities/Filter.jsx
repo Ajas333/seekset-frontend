@@ -19,10 +19,8 @@ function Filter(props) {
       };
 
       const handleFilter = ()=>{
-          // console.log(props.dateRange,props.salaryRange,props.jobType,props.experienceType)
 
           let filtered = props.jobData;
-          // console.log(filtered)
           if (props.dateRange) {
             const now = new Date();
             let startDate;
@@ -54,14 +52,12 @@ function Filter(props) {
             const minSalary = Number(props.salaryRange);
             filtered = filtered.filter(job => {
                 const [jobMinSalary, jobMaxSalary] = job.lpa.split('-').map(Number);
-                // console.log(jobMinSalary,jobMaxSalary)
                 return minSalary <= (jobMinSalary * 100000)/12;
             });
         }
 
           // Job type filter
           if (props.jobType) {
-            // console.log("drftbyunjik",filtered,props.jobType)
               filtered = filtered.filter(job => job.jobtype === props.jobType);
           }
 
@@ -69,7 +65,6 @@ function Filter(props) {
           if (props.experienceType) {
               filtered = filtered.filter(job => job.experiance === props.experienceType);
           }
-          // console.log("filtered job",filtered)
           props.setFilterData(filtered)
           props.setAction(true)
         }
@@ -83,7 +78,7 @@ function Filter(props) {
         }
   return (
     <div>
-      <div className='w-full p-3 mt-10 '>
+      <div className='w-full p-3 mt-0 md:mt-10 '>
           <div className='bg-blue-50 p-3 relative'>
             <div className='absolute top-1 right-0'>
               <p className='text-gray-500 cursor-pointer' onClick={removeFilter}><CiBookmarkRemove size={25}/></p>

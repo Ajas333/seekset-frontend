@@ -10,7 +10,6 @@ function InterviewCallModal({setInterviewModal,roomId,intID}) {
             
           
         }
-        // console.log("room id ",roomId)
   return (
     <div   className='fixed inset-0 flex justify-end mt-10 z-50'>
       <div className='bg-black w-96 h-96 rounded-md mr-5 relative'>

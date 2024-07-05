@@ -52,13 +52,11 @@ function LandingPage() {
               {/* <p className="leading-normal text-2xl mb-6 ">
               Upload your Video CV now! 
               </p> */}
-              <button className="mx-auto lg:mx-0 hover:underline bg-white text-gray-800 font-bold rounded-full my-6 py-2 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out">
-                Login
-              </button>
+              
             </div>
             
-            <div className="w-full md:w-3/5 py-6 text-center">
-              <img className="w-full md:w-4/5 z-50 mx-24" src={hero} alt="Hero" />
+            <div className="w-full  md:w-3/5 py-6 text-center">
+              <img className="w-full md:w-4/5 z-50 md:mx-24" src={hero} alt="Hero" />
             </div>
           </div>
         </div>

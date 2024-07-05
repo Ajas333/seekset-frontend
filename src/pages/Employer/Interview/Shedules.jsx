@@ -1,6 +1,8 @@
 import React,{useState,useEffect} from 'react'
 import SideBar from '../../../components/employer/SideBar'
 import axios from 'axios';
+import Drawer from 'react-modern-drawer'
+import 'react-modern-drawer/dist/index.css'
 import { Link } from 'react-router-dom';
 import AcceptRejectModal from '../../../components/employer/utilities/AcceptRejectModal';
 import { extractDate,extractTime,isInterviewTimeReached } from '../../../components/employer/constants/DateTime';
@@ -9,12 +11,31 @@ import { extractDate,extractTime,isInterviewTimeReached } from '../../../compone
 function Shedules() {
     // const baseURL='http://127.0.0.1:8000'
     const baseURL = import.meta.env.VITE_API_BASEURL
+    const [isOpen, setIsOpen] =useState(false)
+    const [isSmallScreen, setIsSmallScreen] = useState(false);  
     const token = localStorage.getItem('access'); 
     const [interview,setInterview] = useState([])
     const [callModal,setCallModal] = useState(false)
     const [modal,setModal] = useState(false)
     const [modalData,setModalData] = useState()
     const [action,setAction] = useState(false)
+
+    const toggleDrawer = () => {
+      setIsOpen(!isOpen)
+  }
+  
+  const handleResize = () => {
+    setIsSmallScreen(window.innerWidth < 640);
+  };
+  
+  useEffect(() => {
+    window.addEventListener('resize', handleResize);
+    handleResize(); // Check initial screen size
+  
+    return () => {
+        window.removeEventListener('resize', handleResize);
+    };
+  }, []);
     
     useEffect(()=>{
         const fetchData = async()=>{
@@ -48,8 +69,34 @@ function Shedules() {
 
   return (
     <div className='pt-12 flex'>
-        <div>
-          <SideBar/>
+       <div>
+            {isSmallScreen ? (
+                <>
+                    <button onClick={toggleDrawer} title="Add New" className="group cursor-pointer outline-none hover:rotate-90 duration-300">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="40px" height="40px" viewBox="0 0 24 24"
+                        className="stroke-indigo-300 fill-none group-hover:fill-indigo-400 group-active:stroke-indigo-200 group-active:fill-indigo-300 group-active:duration-0 duration-300"
+                      >
+                    <path
+                      d="M12 22C17.5 22 22 17.5 22 12C22 6.5 17.5 2 12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22Z"
+                      strokeWidth="1.5"
+                    ></path>
+                      <path d="M8 12H16" strokeWidth="1.5"></path>
+                      <path d="M12 16V8" strokeWidth="1.5"></path>
+                    </svg>
+                  </button>
+
+                    <Drawer
+                        open={isOpen}
+                        onClose={toggleDrawer}
+                        direction='left'
+                        className='bla bla bla'
+                    >
+                        <div className='bg-gray-50'><SideBar /></div>
+                    </Drawer>
+                </>
+            ) : (
+                <SideBar />
+            )}
         </div>
         <div className='w-full'>
           {modal && <AcceptRejectModal setModal={setModal} modalData={modalData} setAction={setAction} action={action} />}

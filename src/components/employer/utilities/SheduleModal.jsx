@@ -10,7 +10,6 @@ import Spinner from '../../../pages/Common/Spinner';
 
 function SheduleModal({setModal,candidate_id,job_id,changeStatus,setAppStatus}) {
     const [isSpinner,setIsSpinner] = useState(false)
-    // const baseURL='http://127.0.0.1:8000/'
     const baseURL = import.meta.env.VITE_API_BASEURL
     const token = localStorage.getItem('access')
     const  modalRef = useRef();
@@ -19,42 +18,13 @@ function SheduleModal({setModal,candidate_id,job_id,changeStatus,setAppStatus}) 
         setModal();
          }
        }
-    // const handleSubmit = async(event)=>{
-    //     event.preventDefault()
-    //     const formData = new FormData()
-    //     formData.append("date",event.target.date.value)
-    //     formData.append("candidate",candidate_id)
-    //     formData.append("job",job_id)
-        
-    //     console.log(formData)
-    //     try{
-    //          const responce = await axios.post(`${baseURL}api/interview/shedule/`,formData,{
-    //             headers:{
-    //                 'Authorization': `Bearer ${token}`,
-    //                 'Accept' : 'application/json',
-    //                 'Content-Type': 'multipart/form-data'
-    //               }
-    //          })
-    //          console.log(responce)
-    //          if(responce.status==201){
-    //             changeStatus('Interview Sheduled');
-    //             setAppStatus('Interview Sheduled');
-    //             setModal();
-               
-    //          }
-    //     }
-    //     catch(error){
-    //         console.log(error)
-    //     }
-    // }
+    
     const handleSubmit = async(values) =>{
-        // console.log(values)
         const formData = new FormData()
             formData.append("date",values.date)
             formData.append("candidate",candidate_id)
             formData.append("job",job_id)
             
-            // console.log(formData)
             setIsSpinner(true)
             try{
                  const responce = await axios.post(`${baseURL}/api/interview/shedule/`,formData,{
@@ -64,7 +34,6 @@ function SheduleModal({setModal,candidate_id,job_id,changeStatus,setAppStatus}) 
                         'Content-Type': 'multipart/form-data'
                       }
                  })
-                //  console.log(responce)
                  if(responce.status==201){
                     toast.success('Sheduled successfull!',{
                       position: "top-center",
@@ -76,7 +45,6 @@ function SheduleModal({setModal,candidate_id,job_id,changeStatus,setAppStatus}) 
                  }
             }
             catch(error){
-                // console.log(error)
             }
       }
 
@@ -87,7 +55,7 @@ function SheduleModal({setModal,candidate_id,job_id,changeStatus,setAppStatus}) 
             <Spinner/>
           </div>
        ):(
-           <div className='mt-10 flex flex-col text-white  w-2/6'>
+           <div className='mt-10 flex flex-col text-white  w-5/6 md:w-2/6'>
              <button className='place-self-end' onClick={()=>setModal(false)}><IoMdClose size={30}/></button>
              <div className='bg-indigo-200 rounded-xl px-10 py-5  items-center mx-4 '>
              <h1 className='text-gray-700 font-bold text-center text-lg'>Shedule Interview</h1>

@@ -7,7 +7,6 @@ import axios from 'axios';
 
 
 function JobDetailMOdal({setModal,jobData}) {
-    // const baseURL='http://127.0.0.1:8000/'
     const baseURL = import.meta.env.VITE_API_BASEURL
     const  modalRef = useRef();
     const closeModal =(e)=>{
@@ -15,10 +14,8 @@ function JobDetailMOdal({setModal,jobData}) {
         setModal(false);
         }
         }
-        // console.log("job data....",jobData)
 
     const handleSubmit = async (values)=>{
-      // console.log(values)
       const lpa= `${values.saleryfrom}-${values.saleryto}`
       const formData = new FormData();
       formData.append("title",values.title);
@@ -34,7 +31,6 @@ function JobDetailMOdal({setModal,jobData}) {
       
       try{
         const responce = await axios.post(baseURL+'/api/empjob/editJob/',formData)
-        // console.log(responce)
         if(responce.status == 200){
           toast.success('Job edited!',{
             position: "top-center",
@@ -49,11 +45,9 @@ function JobDetailMOdal({setModal,jobData}) {
         }
       }
       catch(error){
-        // console.log(error)
       }
     }
     let [salaryFrom, salaryTo] = jobData.lpa.split('-');
-    // console.log("ucctudyfufy",salaryFrom,"ftyuhio",salaryTo)
     const initialValue = {
       title:jobData.title,
       location:jobData.location,
