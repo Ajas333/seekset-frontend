@@ -4,7 +4,7 @@ import { IoSend } from "react-icons/io5";
 import { FaArrowLeft } from "react-icons/fa6";
 
 
-function ChatInterface({selectedChat,chatMessages,setMessage,sendMessage,message,setChatDrawer,chatDrawer}) {
+function ChatInterface({empName,selectedChat,chatMessages,setMessage,sendMessage,message,setChatDrawer,chatDrawer}) {
     const baseURL = import.meta.env.VITE_API_BASEURL
 
   return (

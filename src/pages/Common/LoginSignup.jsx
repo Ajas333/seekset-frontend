@@ -40,7 +40,7 @@ function LoginSignup() {
   }, [vantaEffect]);
   return (
     <div
-      className="max-w-[86rem] h-screen flex justify-center items-center relative"
+      className="max-w-full h-screen flex justify-center items-center relative"
       ref={vantaRef}
     >
       <div className="bg-blue-100 md:bg-white rounded-lg md:rounded-tr-4xl md:rounded-bl-4xl h-auto w-4/5  md:w-3/5 flex">

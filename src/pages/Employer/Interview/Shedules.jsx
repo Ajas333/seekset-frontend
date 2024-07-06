@@ -9,7 +9,7 @@ import { extractDate,extractTime,isInterviewTimeReached } from '../../../compone
 
 
 function Shedules() {
-    // const baseURL='http://127.0.0.1:8000'
+    
     const baseURL = import.meta.env.VITE_API_BASEURL
     const [isOpen, setIsOpen] =useState(false)
     const [isSmallScreen, setIsSmallScreen] = useState(false);  
@@ -47,7 +47,7 @@ function Shedules() {
                         'Content-Type': 'multipart/form-data'
                     }
                 })
-                // console.log("Sheduled jobs details.....",responce)
+                console.log("Sheduled jobs details.....",responce)
                 if(responce.status == 200){
                     setInterview(responce.data)
                 }
@@ -59,7 +59,7 @@ function Shedules() {
         fetchData();
     },[action])
    
-    // console.log("interviews,....................",interview)
+    console.log("interviews,....................",interview)
 
     const toggleModal = (interview_id)=>{
       const data = interview.filter(int => int.id == interview_id)

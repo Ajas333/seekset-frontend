@@ -131,10 +131,7 @@ useEffect(() => {
     }
 }, [userid]);
 
-
-
-
-
+  console.log(notifications)
   return (
     <div className=' w-full flex justify-between h-12 bg-blue-200 fixed top-0 z-50' >
       {modal && <NotificationModal setUnreadCount={setUnreadCount} notifications={notifications} setModal={setModal} userid={userid} />}

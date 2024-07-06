@@ -153,11 +153,11 @@ function Chat() {
                   size={440}
                   className='bla bla bla'>
                   <div className='bg-gray-100 '>
-                    <ChatInterface setChatDrawer={setChatDrawer} chatDrawer={chatDrawer} message={message} setMessage={setMessage} sendMessage={sendMessage} chatMessages={chatMessages} selectedChat={selectedChat} />
+                    <ChatInterface empName={empName} setChatDrawer={setChatDrawer} chatDrawer={chatDrawer} message={message} setMessage={setMessage} sendMessage={sendMessage} chatMessages={chatMessages} selectedChat={selectedChat} />
                   </div>
                 </Drawer>
               ) : (
-                <ChatInterface setChatDrawer={setChatDrawer} chatDrawer={chatDrawer} message={message} setMessage={setMessage} sendMessage={sendMessage} chatMessages={chatMessages} selectedChat={selectedChat} />
+                <ChatInterface empName={empName} setChatDrawer={setChatDrawer} chatDrawer={chatDrawer} message={message} setMessage={setMessage} sendMessage={sendMessage} chatMessages={chatMessages} selectedChat={selectedChat} />
               )}
             </div>
           </div>
