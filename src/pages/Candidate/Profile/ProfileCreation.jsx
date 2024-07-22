@@ -33,29 +33,26 @@ function ProfileCreation() {
   const [croppedImageUrl, setCroppedImageUrl] = useState('');
   const [imgError,setImgError] = useState('')
 
+  const defaultSkills = [
+    "Python", "Django", "JavaScript", "React", "HTML", "CSS", "SQL", "Git", "Docker", "AWS"
+];
+
 
   const [resume, setResume] = useState({
     resume: null
   });
-  const [data, setData] = useState({
-    'phone': "",
-    'dob': "",
-    'gender': "",
-    'specilization': "",
-    'education': "",
-    'completed': "",
-    'mark': "",
-    'college': "",
-    'linkedin': "",
-    'github': "",
 
-  });
+ 
 
   const stepDown = () => setStep(step - 1);
   const stepUp = () => setStep(step + 1);
 
-  const handleSkill = (e) => setSkill(e.target.value);
-
+  const handleSkill = (e) => {
+    setSkill(e.target.value);
+    setFilteredSkills(defaultSkills.filter(skill =>
+      skill.toLowerCase().includes(value.toLowerCase())
+  ));
+  }
   const handleAddSkill = () => {
     if (skill.trim() !== '') {
       setSkills([...skills, skill.trim()]);
@@ -216,7 +213,7 @@ function ProfileCreation() {
           <div className='bg-white w-full md:rounded-l-lg shadow-2xl py-12'>
             <div className=' '>
               {/* numbers */}
-              <div className='flex mt-8 mt-8 h-12 w-full justify-center'>
+              <div className='flex  mt-8 h-12 w-full justify-center'>
                 <div>
                   <div className={`flex justify-center rounded-full ${step > 1 ? 'border-4' : 'border-2'} ${step > 1 ? 'border-green-500' : 'border-gray-900'} border-solid w-12 h-12`}>
                     {step > 1 ? (<FcCheckmark className='mt-2 h-6 w-8' />) : (<span className='mt-2'>1</span>)}
@@ -307,9 +304,7 @@ function ProfileCreation() {
 
                                   </div>
                               </div>
-                              
-                              
-                              
+                                  
                                 {/* profile image */}
                                 <div className='flex'>
                                   <div className='flex flex-col'>
@@ -409,6 +404,14 @@ function ProfileCreation() {
                                         className="flex items-center w-full mb-5 mx-2 px-4 py-3 text-sm font-medium outline-none focus:bg-grey-400 placeholder:text-grey-700 bg-grey-500 text-dark-grey-900 rounded-2xl"
                                         onChange={handleSkill}
                                       />
+                                      {/* <select id="skills"  value={skill}
+                                       className="flex items-center w-full mb-5 mx-2 px-4 py-3 text-sm font-medium outline-none focus:bg-grey-400 placeholder:text-grey-700 bg-grey-500 text-dark-grey-900 rounded-2xl"
+                                      onChange={handleSkill}>
+                                        {defaultSkills.map((skill, index) => (
+                                            <option key={index} value={skill}>{skill}</option>
+                                        ))}
+                                    </select> */}
+                                    
                                       <div onClick={handleAddSkill} className="h-7 cursor-pointer bg-blue-700 hover:bg-blue-400 text-white font-semibold px-2 rounded">
                                         Add
                                       </div>

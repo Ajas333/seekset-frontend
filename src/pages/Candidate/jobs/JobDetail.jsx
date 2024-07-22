@@ -70,25 +70,7 @@ function JobDetail() {
       }
       fetchJobData()
     }, [jobId, token, baseURL])
-    // const fetchQuestions = async ()=>{
-    //   try{
-    //       const responce = await axios.get(`${baseURL}/api/empjob/getjobs/questions/${jobId}/`,{
-    //         headers:{
-    //           'Authorization': `Bearer ${token}`,
-    //           'Accept' : 'application/json',
-    //           'Content-Type': 'multipart/form-data'
-    //         }
-    //       });
-        
-    //       console.log("questionssssssssssss",responce)
-    //       if(responce.status==200){
-    //         setQuestions(responce.data)
-    //       }   
-    //   }
-    //   catch(error){
-    //     console.log(error)
-    //   }
-    // }
+    
 
     if (!jobData) {
       return <div>Loading...</div>; // Display loading message while data is being fetched
@@ -117,41 +99,7 @@ function JobDetail() {
 
    
 
-    // console.log(token)
-    
-    // const handleApply = async ()=>{
-    //   try{  
-    //     console.log("hehehehehhehehehehheehhehhehehhehehheh")
-    //     const responce = await axios.post(`${baseURL}/api/empjob/applyjob/${jobId}/`,{
-    //       headers:{
-    //         'Authorization': `Bearer ${token}`,
-    //         'Accept' : 'application/json',
-    //         'Content-Type': 'multipart/form-data'
-    //     }
-    //     });
-    //     console.log(responce)
-    //     if(responce.status == 200 || responce.status == 201){
-    //       setModal(false)
-    //       Swal.fire({
-    //         position: "center",
-    //         icon: "success",
-    //         title: `${responce.data.message}`,
-    //         showConfirmButton: false,
-    //         timer: 1500
-    //       });
-    //     }
-    //   }
-    //   catch(error){
-    //     console.log(error)
-    //     Swal.fire({
-    //       position: "center",
-    //       icon: "error",
-    //       title: "Failed to apply",
-    //       showConfirmButton: false,
-    //       timer: 1500
-    //     });
-    //   }
-    // }
+   
 
     const handleApply = async()=>{
       // console.log("helloooooooooooooooooooooo")
@@ -176,10 +124,10 @@ function JobDetail() {
     // console.log("...................................................",questions)
     // console.log("userid...........................",userid)
   return (
-    <div className='mt-16'>
+    <div className='mt-16  bg-red-200'>
       <div className='flex items-center flex-col gap-2'>
         {modal && <QModal setModal={setModal} questions={questions} setAnswers={setAnswers} answers={answers} handleApply={handleApply}/> }
-            <div className='w-3/5 py-4 bg-gray-100 rounded-md mt-8'>
+            <div className='md:w-3/5 py-4 bg-gray-100 rounded-md mt-8'>
                 <div className='flex  py-1'>
                     <div className="group relative h-16 w-16 overflow-hidden rounded-lg ml-4 ">
                       {image && <img src={image} alt="" className="h-full w-full object-cover text-gray-700" />}
@@ -224,16 +172,16 @@ function JobDetail() {
                           </div>
                     </div>
                     <div className=' px-3 flex gap-3'>
-                        <button className="px-6 py-1 rounded-full bg-gradient-to-b from-blue-500 to-blue-600 text-white focus:ring-2 focus:ring-blue-400 hover:shadow-xl transition duration-200"
+                        <button className=" px-3 h-10   md:px-6 md:py-1 rounded-full bg-gradient-to-b from-blue-500 to-blue-600 text-white focus:ring-2 focus:ring-blue-400 hover:shadow-xl transition duration-200"
                           onClick={handleApply}>Apply
                          </button>
-                         <button className="px-6 py-1 rounded-full bg-gradient-to-b from-green-500 to-green-600 text-white focus:ring-2 focus:ring-green-400 hover:shadow-xl transition duration-200"
+                         <button className=" px-3 h-10  md:px-6 md:py-1 rounded-full bg-gradient-to-b from-green-500 to-green-600 text-white focus:ring-2 focus:ring-green-400 hover:shadow-xl transition duration-200"
                           onClick={handleSave}>{isSaved ? 'Unsave' : 'Save'}
                          </button>
                     </div>
                 </div>
             </div>
-            <div className='w-3/5 py-4 px-3 bg-gray-100 rounded-md flex flex-col gap-2'>
+            <div className='w-full md:w-3/5 py-4 px-3 bg-gray-100 rounded-md flex flex-col gap-2'>
                 <div className=''>
                   <span className='text-gray-700 font-semibold text-lg'>Job description</span>
                   <p className='text-base text-gray-700'>{jobData.about}</p>
@@ -253,7 +201,7 @@ function JobDetail() {
 
             </div>
 
-            <div className='w-3/5 py-4 px-3 mb-4 bg-gray-100 rounded-md flex flex-col gap-2'>
+            <div className='w-full md:w-3/5 py-4 px-3 mb-4 bg-gray-100 rounded-md flex flex-col gap-2'>
                 <div className=''>
                   <span className='text-gray-700 font-semibold text-lg'>About Company</span>
                   <p className='text-base text-gray-700'>{jobData.employer.about}</p>
