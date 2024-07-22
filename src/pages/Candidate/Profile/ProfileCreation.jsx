@@ -13,6 +13,8 @@ import user_default from '../../../assets/user_default.jpg'
 import { RiPencilFill } from "react-icons/ri";
 import ProfilepicModal from '../../../components/ProfilepicModal';
 import { ProfileDataSchema,initialValues } from '../../../validation/CandidateProfileValidation';
+import Spinner from '../../Common/Spinner';
+import { toast } from 'react-toastify';
 
 
 
@@ -32,11 +34,9 @@ function ProfileCreation() {
   const [modal, setModal] = useState(false);
   const [croppedImageUrl, setCroppedImageUrl] = useState('');
   const [imgError,setImgError] = useState('')
+  const [isSpinner, setIsSpinner] = useState(false);
 
-  const defaultSkills = [
-    "Python", "Django", "JavaScript", "React", "HTML", "CSS", "SQL", "Git", "Docker", "AWS"
-];
-
+ 
 
   const [resume, setResume] = useState({
     resume: null
@@ -49,9 +49,7 @@ function ProfileCreation() {
 
   const handleSkill = (e) => {
     setSkill(e.target.value);
-  //   setFilteredSkills(defaultSkills.filter(skill =>
-  //     skill.toLowerCase().includes(value.toLowerCase())
-  // ));
+ 
   }
   const handleAddSkill = () => {
     if (skill.trim() !== '') {
@@ -94,13 +92,13 @@ function ProfileCreation() {
     }));
   };
 
-  // console.log("image uploaded.......",imageUrl)
+ 
   useEffect(()=>{
     const convertBase64ToImage = (base64String) => {
       
       const base64Pattern = /^data:image\/(png|jpeg|jpg);base64,/;
     if (!base64Pattern.test(base64String)) {
-      // console.error('Invalid base64 string');
+     
       return;
     }   
     const base64Content = base64String.replace(base64Pattern, '');
@@ -115,17 +113,15 @@ function ProfileCreation() {
     setProfilepic(file);
     };
     convertBase64ToImage(croppedImageUrl)
-    // console.log("cropped image url............",croppedImageUrl)
+ 
   },[croppedImageUrl])
 
 
-  useEffect(()=>{
-      // console.log("profile piccture after crop",profile_pic)
-  },[profile_pic])
+
 
   const handleSubmit =async(values,{setSubmitting}) =>{
 
-    // console.log(values)
+    
     
     const skill=skills.toString()
     
@@ -149,7 +145,8 @@ function ProfileCreation() {
     if (resume.resume) {
       formData.append("resume", resume.resume, resume.resume.name);
     }
-    // console.log("form data................",formData)
+   
+    setIsSpinner(true)
     try{
         const responce=await axios.post(baseURL+'/api/account/user/profile_creation/',formData,{
             headers:{
@@ -158,18 +155,25 @@ function ProfileCreation() {
               'Content-Type': 'multipart/form-data'
             }
           })
-        // console.log("response...........................",responce)
+       
         if(responce.status==200){
           dispatch(
             set_user_basic_details({
               profile_pic : responce.data.data.profile_pic
             })
           )
+          setIsSpinner(false)
           navigate('/candidate/')
         }
     }
     catch(error){
-        // console.log("error",error)
+        console.log("error",error)
+        setIsSpinner(false)
+        toast.warning('something went Wrong!!!',{
+          position: "top-center",
+        });
+
+
     }finally{
       setSubmitting(false)
     }
@@ -188,6 +192,16 @@ function ProfileCreation() {
     };
   }, [])
   return (
+    <>
+      {isSpinner && 
+       <div className="w-full min-h-[100vh] flex justify-center items-center">
+       {/* <Spinner /> */}
+       <div class="flex justify-center items-center">
+          <div class="animate-spin rounded-full h-12 w-32 border-t-2 border-b-2 border-blue-900"></div>
+      </div>
+     </div>
+      }
+      {!isSpinner && 
     <div>
       <div className='absolute m-2'>
         <img src={logo} alt="" className='w-12 h-10' />
@@ -489,6 +503,8 @@ function ProfileCreation() {
         </div>
       </div>
     </div>
+      }
+    </>
   )
 }
 

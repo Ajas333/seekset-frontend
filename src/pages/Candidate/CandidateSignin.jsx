@@ -52,55 +52,55 @@ function CandidateSignin({setIsSpinner}) {
         }
     };
 
-  //   const GoogleTestlogin = async (userDetails)=>{
-  //     console.log("userDetails after login",userDetails)
-  //     const formData ={
-  //       client_id : userDetails,
-  //     };
-  //     try{
-  //         const response = await axios.post(baseURL+'/api/account/auth/candidate/',formData)
-  //         console.log("auth responce ",response)
-  //         if(response.status==200){
+    const GoogleTestlogin = async (userDetails)=>{
+      console.log("userDetails after login",userDetails)
+      const formData ={
+        client_id : userDetails,
+      };
+      try{
+          const response = await axios.post(baseURL+'/api/account/auth/candidate/',formData)
+          console.log("auth responce ",response)
+          if(response.status==200){
          
-  //           localStorage.setItem('access',response.data.access_token)
-  //           localStorage.setItem('refresh',response.data.refresh_token)
+            localStorage.setItem('access',response.data.access_token)
+            localStorage.setItem('refresh',response.data.refresh_token)
             
     
-  //           dispatch(
-  //             set_Authentication({
-  //               name: jwtDecode(response.data.access_token).name,
-  //               email:response.data.email,
-  //               isAuthenticated:true,
-  //               isAdmin:response.data.isAdmin,
-  //               usertype:response.data.usertype,
-  //             })
-  //           )
-  //             dispatch(
-  //               set_user_basic_details({
-  //                 profile_pic : response.data.user_data.profile_pic,
-  //                 user_type_id : response.data.user_data.id,
-  //               })
-  //             )
-  //             toast.success('Login successful!',{
-  //               position: "top-center",
-  //             });
-  //             if(response.data.user_data.completed == false ){
-  //               navigate('/candidate/create_profile/')
-  //               }
-  //               else{
+            dispatch(
+              set_Authentication({
+                name: jwtDecode(response.data.access_token).name,
+                email:response.data.email,
+                isAuthenticated:true,
+                isAdmin:response.data.isAdmin,
+                usertype:response.data.usertype,
+              })
+            )
+              dispatch(
+                set_user_basic_details({
+                  profile_pic : response.data.user_data.profile_pic,
+                  user_type_id : response.data.user_data.id,
+                })
+              )
+              toast.success('Login successful!',{
+                position: "top-center",
+              });
+              if(response.data.user_data.completed == false ){
+                navigate('/candidate/create_profile/')
+                }
+                else{
                 
-  //                 navigate('/candidate/')
-  //           }
-  //           }
-  //           else {
-  //             console.log("responce...............................",response)
-  //             setFormError(response.data.message)
-  //           }
-  //     }
-  //     catch(error){
-  //       console.log(error)
-  //     }
-  // }
+                  navigate('/candidate/')
+            }
+            }
+            else {
+              console.log("responce...............................",response)
+              setFormError(response.data.message)
+            }
+      }
+      catch(error){
+        console.log(error)
+      }
+  }
 
   return (
     <div>
@@ -160,7 +160,7 @@ function CandidateSignin({setIsSpinner}) {
                         <button type='submit' disabled={isSubmitting} className="w-full px-4 py-3 mb-1 text-sm font-bold leading-none text-white transition duration-300 md:w-96 rounded-2xl hover:bg-purple-blue-600 focus:ring-4 focus:ring-purple-blue-100 bg-purple-blue-500">
                         Send Otp
                         </button>
-                        {/* <div className='flex justify-center'>
+                        <div className='flex justify-center'>
                           <GoogleLogin
                               onSuccess={credentialResponse => {
                                 GoogleTestlogin(credentialResponse.credential);
@@ -169,7 +169,7 @@ function CandidateSignin({setIsSpinner}) {
                                console.log('Login Failed');
                               }}
                             />
-                        </div> */}
+                        </div>
                         
                     </Form>
                 )}

@@ -50,49 +50,49 @@ function EmpSignup({setIsSpinner}) {
             setSubmitting(false);
         }
     }
-    // const GoogleTestlogin = async (userDetails) => {
-    //     console.log("userDetails after login", userDetails);
-    //     const formData = {
-    //         id_token: userDetails.id_token, // Ensure this key matches the backend expectation
-    //     };
-    //     try {
-    //         const response = await axios.post(baseURL + '/api/account/auth/employer/', formData);
-    //         console.log("auth response", response);
-    //         if (response.status === 200) {
-    //             localStorage.setItem('access', response.data.access_token);
-    //             localStorage.setItem('refresh', response.data.refresh_token);
+    const GoogleTestlogin = async (userDetails) => {
+        console.log("userDetails after login", userDetails);
+        const formData = {
+            id_token: userDetails.id_token, // Ensure this key matches the backend expectation
+        };
+        try {
+            const response = await axios.post(baseURL + '/api/account/auth/employer/', formData);
+            console.log("auth response", response);
+            if (response.status === 200) {
+                localStorage.setItem('access', response.data.access_token);
+                localStorage.setItem('refresh', response.data.refresh_token);
     
-    //             dispatch(
-    //                 set_Authentication({
-    //                     name: jwtDecode(response.data.access_token).name,
-    //                     email: response.data.email,
-    //                     isAuthenticated: true,
-    //                     isAdmin: response.data.isAdmin,
-    //                     usertype: response.data.usertype,
-    //                 })
-    //             );
-    //             dispatch(
-    //                 set_user_basic_details({
-    //                     profile_pic: response.data.user_data.profile_pic,
-    //                     user_type_id: response.data.user_data.id,
-    //                 })
-    //             );
-    //             toast.success('Login successful!', {
-    //                 position: "top-center",
-    //             });
-    //             if (response.data.user_data.completed === false) {
-    //                 navigate('/employer/profile_creation/');
-    //             } else {
-    //                 navigate('/employer/');
-    //             }
-    //         } else {
-    //             console.log("response...............................", response);
-    //             setFormError(response.data.message);
-    //         }
-    //     } catch (error) {
-    //         console.log(error);
-    //     }
-    // };
+                dispatch(
+                    set_Authentication({
+                        name: jwtDecode(response.data.access_token).name,
+                        email: response.data.email,
+                        isAuthenticated: true,
+                        isAdmin: response.data.isAdmin,
+                        usertype: response.data.usertype,
+                    })
+                );
+                dispatch(
+                    set_user_basic_details({
+                        profile_pic: response.data.user_data.profile_pic,
+                        user_type_id: response.data.user_data.id,
+                    })
+                );
+                toast.success('Login successful!', {
+                    position: "top-center",
+                });
+                if (response.data.user_data.completed === false) {
+                    navigate('/employer/profile_creation/');
+                } else {
+                    navigate('/employer/');
+                }
+            } else {
+                console.log("response...............................", response);
+                setFormError(response.data.message);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
     return (
        
@@ -150,7 +150,7 @@ function EmpSignup({setIsSpinner}) {
                                 >
                                     Send Otp
                                 </button>
-                                {/* <div className='flex justify-center'>
+                                <div className='flex justify-center'>
                                     <GoogleLogin
                                         onSuccess={credentialResponse => {
                                             GoogleTestlogin(credentialResponse.credential);
@@ -159,7 +159,7 @@ function EmpSignup({setIsSpinner}) {
                                         console.log('Login Failed');
                                         }}
                                         />
-                                </div> */}
+                                </div>
                             </Form>
                         )}
                     </Formik>
