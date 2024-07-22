@@ -182,7 +182,7 @@ function Message() {
           open={chatDrawer}
           onClose={() => setChatDrawer(false)}
           direction='right'
-          size={440}
+          size={400}
           className='bla bla bla'>
           <div className='bg-gray-100 '>
             <Chats setChatDrawer={setChatDrawer} chatDrawer={chatDrawer} candidateName={candidateName} selectedChat={selectedChat} chatMessages={chatMessages} setMessage={setMessage} message={message} sendMessage={sendMessage} />

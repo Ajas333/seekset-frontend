@@ -18,7 +18,7 @@ function Shedules() {
     const [callModal,setCallModal] = useState(false)
     const [modal,setModal] = useState(false)
     const [modalData,setModalData] = useState()
-    const [action,setAction] = useState(false)
+    const [load,setLoad] = useState(false)
 
     const toggleDrawer = () => {
       setIsOpen(!isOpen)
@@ -57,7 +57,7 @@ function Shedules() {
             }
         }
         fetchData();
-    },[action])
+    },[load])
    
     console.log("interviews,....................",interview)
 
@@ -68,7 +68,7 @@ function Shedules() {
     }
 
   return (
-    <div className='pt-12 flex'>
+    <div className='pt-12 flex min-h-[80vh]'>
        <div>
             {isSmallScreen ? (
                 <>
@@ -99,7 +99,7 @@ function Shedules() {
             )}
         </div>
         <div className='w-full'>
-          {modal && <AcceptRejectModal setModal={setModal} modalData={modalData} setAction={setAction} action={action} />}
+          {modal && <AcceptRejectModal setModal={setModal} modalData={modalData} setLoad={setLoad} load={load} />}
         <div className="container mx-auto py-8 px-4 md:px-6">
           <h1 className="text-3xl font-bold mb-6">Interview Schedules</h1>
           <div className="overflow-x-auto">

@@ -47,7 +47,7 @@ function SheduledInterviews() {
         return timePart;
     };
     return (
-    <div className='pt-12'>
+    <div className='pt-12  min-h-[80vh]'>
        <div className="container mx-auto py-8 px-4 md:px-6">
           <h1 className="text-3xl font-bold mb-6">Interview Schedules</h1>
           <div className="overflow-x-auto">

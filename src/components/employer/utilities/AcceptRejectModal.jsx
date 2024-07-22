@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import { IoMdClose } from "react-icons/io";
 
 
-function AcceptRejectModal({setModal,modalData,setAction,action}) {
+function AcceptRejectModal({setModal,modalData,setLoad,load}) {
     const baseURL = import.meta.env.VITE_API_BASEURL
     const  modalRef = useRef();
     const closeModal =(e)=>{
@@ -39,7 +39,7 @@ function AcceptRejectModal({setModal,modalData,setAction,action}) {
                 position: "top-center",
               });
               setModal()
-              setAction(!action)
+              setLoad(!load)
 
             }
             else{
