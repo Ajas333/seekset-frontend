@@ -124,7 +124,7 @@ function JobDetail() {
     // console.log("...................................................",questions)
     // console.log("userid...........................",userid)
   return (
-    <div className='mt-16  bg-red-200'>
+    <div className='mt-16  '>
       <div className='flex items-center flex-col gap-2'>
         {modal && <QModal setModal={setModal} questions={questions} setAnswers={setAnswers} answers={answers} handleApply={handleApply}/> }
             <div className='md:w-3/5 py-4 bg-gray-100 rounded-md mt-8'>
