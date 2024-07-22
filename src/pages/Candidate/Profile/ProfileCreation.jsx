@@ -49,9 +49,9 @@ function ProfileCreation() {
 
   const handleSkill = (e) => {
     setSkill(e.target.value);
-    setFilteredSkills(defaultSkills.filter(skill =>
-      skill.toLowerCase().includes(value.toLowerCase())
-  ));
+  //   setFilteredSkills(defaultSkills.filter(skill =>
+  //     skill.toLowerCase().includes(value.toLowerCase())
+  // ));
   }
   const handleAddSkill = () => {
     if (skill.trim() !== '') {
